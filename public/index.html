@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alfarabi University — AI Engineering Department</title>
+  <meta name="description" content="Al-Farabi University AI Engineering Department — Pioneering AI education in Iraq. Explore programs, research, and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Alfarabi University — AI Engineering Department">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="/og-image.png">
+  <meta property="og:description" content="Pioneering AI education in Iraq. Explore programs, research, and campus life at Al-Farabi University.">
+  <meta property="og:url" content="https://alfarabi.edu.iq/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Alfarabi University — AI Engineering">
+  <meta name="twitter:description" content="Pioneering AI education in Iraq.">
+  <link rel="canonical" href="https://alfarabi.edu.iq/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Al-Farabi University",
+    "description": "Premier AI Engineering Department in Iraq, offering cutting-edge programs in artificial intelligence, machine learning, and computer science.",
+    "url": "https://alfarabi.edu.iq",
+    "sameAs": [],
+    "department": {
+      "@type": "EducationalOrganization",
+      "name": "AI Engineering Department"
+    }
+  }
+  </script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/news.css">
+  <link rel="stylesheet" href="css/classes.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Navbar -->
+  <div id="navbar-root"></div>
+
+  <!-- ════ Hero Section ════ -->
+  <section class="hero-section" id="hero">
+    <div class="hero-canvas-wrap" id="hero-canvas"></div>
+    <div class="hero-gradient-top" aria-hidden="true"></div>
+    <div class="hero-gradient-left" aria-hidden="true"></div>
+    <div class="hero-gradient-bottom" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge" id="hero-badge">
+        <span class="hero-badge-dot" aria-hidden="true"></span>
+        <span id="hero-badge-text"></span>
+      </div>
+      <h1 class="hero-headline">
+        <span class="hero-headline-top" id="hero-headline-top"></span>
+        <span class="hero-headline-accent text-gradient-gold" id="hero-headline-accent"></span>
+      </h1>
+      <p class="hero-sub" id="hero-sub"></p>
+      <div class="hero-ctas">
+        <a href="programs.html" class="btn-primary" id="hero-cta-programs"></a>
+        <a href="about.html" class="btn-gold" id="hero-cta-about"></a>
+      </div>
+      <div class="hero-trust" id="hero-trust"></div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="hero-scroll-mouse"><div class="hero-scroll-wheel"></div></div>
+    </div>
+  </section>
+
+  <!-- ════ Stats Section ════ -->
+  <section class="stats-section" id="stats-section">
+    <div class="container">
+      <div class="stats-grid" id="stats-grid"></div>
+    </div>
+  </section>
+
+  <!-- ════ Calendar Section ════ -->
+  <section class="cal-section" id="calendar-section">
+    <div class="container">
+      <div class="cal-header">
+        <div>
+          <div class="section-label" id="cal-label"></div>
+          <h2 class="cal-title" id="cal-title"></h2>
+          <p class="cal-subtitle" id="cal-subtitle"></p>
+        </div>
+        <a href="calendar.html" class="btn-gold" id="cal-view-all"></a>
+      </div>
+      <div class="cal-events" id="cal-events"></div>
+    </div>
+  </section>
+
+  <!-- ════ News Section ════ -->
+  <section class="news-section" id="news-section">
+    <div class="container">
+      <div class="news-header">
+        <div>
+          <div class="section-label" id="news-label"></div>
+          <h2 class="news-title" id="news-title"></h2>
+        </div>
+        <a href="news.html" class="btn-gold" id="news-view-all"></a>
+      </div>
+      <div class="news-grid" id="news-grid"></div>
+    </div>
+  </section>
+
+  <!-- ════ Classes Section ════ -->
+  <section class="classes-section" id="classes-section">
+    <div class="container">
+      <div class="classes-header">
+        <div>
+          <div class="section-label" id="classes-label"></div>
+          <h2 class="classes-title" id="classes-title"></h2>
+          <p class="classes-subtitle" id="classes-subtitle"></p>
+        </div>
+        <a href="classes.html" class="btn-gold" id="classes-view-all"></a>
+      </div>
+      <div class="classes-grid" id="classes-grid"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer-root"></div>
+
+  <!-- Scripts -->
+  <script>
+    // Only load Three.js on desktop — phones can't handle it
+    if (window.innerWidth > 768) {
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/three@0.160.0/build/three.min.js';
+      s.onload = function() {
+        var c = document.createElement('script');
+        c.src = 'js/hero-canvas.js';
+        c.onload = function() { initHeroCanvas('hero-canvas'); };
+        document.body.appendChild(c);
+      };
+      document.body.appendChild(s);
+    }
+  </script>
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initPage();
+
+      const settings = await getSiteSettings();
+      const articles = (await getArticles()) || [];
+      const cohorts = (await getCohorts()) || [];
+      const s = settings || {};
+
+      // ── Hero ──
+      document.getElementById('hero-badge-text').textContent = t('hero.badge_prefix');
+      document.getElementById('hero-headline-top').textContent = s.hero_title || t('hero.headline_top');
+      document.getElementById('hero-headline-accent').textContent = t('hero.headline_accent');
+      document.getElementById('hero-sub').textContent = s.hero_subtitle || '';
+      document.getElementById('hero-cta-programs').innerHTML = t('hero.explore_programs') + ' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      document.getElementById('hero-cta-about').textContent = t('hero.our_story');
+
+      const currentYear = new Date().getFullYear();
+      const yearsOfExcellence = currentYear - (s.founded_year || 2018);
+      const trustData = [
+        { num: yearsOfExcellence + '+', label: t('hero.years_excellence') },
+        { num: (s.total_students || 200) + '+', label: t('hero.active_students') },
+        { num: (s.research_papers || 50) + '+', label: t('hero.research_papers') },
+        { num: '#1', label: t('hero.top_dept') },
+      ];
+      document.getElementById('hero-trust').innerHTML = trustData.map(item =>
+        `<div class="hero-trust-item"><span class="hero-trust-num">${item.num}</span><span class="hero-trust-label">${item.label}</span></div>`
+      ).join('');
+
+      // ── Stats ──
+      const statsData = [
+        { icon: '🎓', value: s.total_students || 200, label: t('stats.enrolled'), desc: t('stats.enrolled_desc') },
+        { icon: '📄', value: s.research_papers || 50, label: t('stats.papers'), desc: t('stats.papers_desc') },
+        { icon: '🏛️', value: yearsOfExcellence, label: t('stats.years'), desc: t('stats.years_desc_prefix') + ' ' + (s.founded_year || 2018) },
+        { icon: '🤖', value: s.ai_specializations || 6, label: t('stats.specializations'), desc: t('stats.specializations_desc') },
+        { icon: '🌍', value: s.partner_universities || 12, label: t('stats.partners'), desc: t('stats.partners_desc') },
+        { icon: '🏆', value: '#1', label: t('stats.top_dept'), desc: t('stats.top_dept_desc_prefix') + ' ' + (s.country || 'Iraq') },
+      ];
+      document.getElementById('stats-grid').innerHTML = statsData.map(stat =>
+        `<div class="stats-card glass-card aos-up">
+          <span class="stats-icon" aria-hidden="true">${stat.icon}</span>
+          <span class="stats-value" ${typeof stat.value === 'number' ? `data-countup="${stat.value}"` : ''}>${stat.value}</span>
+          <span class="stats-label">${stat.label}</span>
+          <span class="stats-desc">${stat.desc}</span>
+          <span class="stats-glow" aria-hidden="true"></span>
+        </div>`
+      ).join('');
+
+      // ── Calendar ──
+      document.getElementById('cal-label').textContent = t('cal.label');
+      document.getElementById('cal-title').innerHTML = t('cal.title_1') + ' <span class="text-gradient-gold">' + t('cal.title_2') + '</span>';
+      document.getElementById('cal-subtitle').textContent = t('cal.subtitle');
+      document.getElementById('cal-view-all').textContent = t('cal.view_all');
+
+      const events = articles.filter(a => a.type === 'event' && a.status === 'published').sort((a, b) => new Date(a.event_date || a.published_at) - new Date(b.event_date || b.published_at)).slice(0, 5);
+      if (events.length === 0) {
+        document.getElementById('cal-events').innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:40px 0">${t('cal.no_events')}</p>`;
+      } else {
+        const catColors = { seminar: 'gold', exam: 'crimson', deadline: 'crimson', social: 'blue', lecture: 'gold', workshop: 'blue', other: 'gold' };
+        document.getElementById('cal-events').innerHTML = events.map(ev => {
+          const d = new Date(ev.event_date || ev.published_at);
+          const day = d.getDate();
+          const month = d.toLocaleString('en', { month: 'short' });
+          const cat = catColors[ev.category] || 'gold';
+          return `<div class="cal-card glass aos-up">
+            <div class="cal-date-badge"><span class="cal-date-day">${day}</span><span class="cal-date-month">${month}</span></div>
+            <div class="cal-event-info">
+              <span class="cal-category cal-cat-${cat}">${ev.category || 'event'}</span>
+              <div class="cal-event-title">${ev.title}</div>
+              <div class="cal-event-meta">
+                ${ev.time ? `<span class="cal-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${ev.time}</span>` : ''}
+                ${ev.location ? `<span class="cal-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${ev.location}</span>` : ''}
+              </div>
+            </div>
+            <svg class="cal-event-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>`;
+        }).join('');
+      }
+
+      // ── News ──
+      document.getElementById('news-label').textContent = t('news.label');
+      document.getElementById('news-title').innerHTML = t('news.title_1') + ' <span class="text-gradient-gold">' + t('news.title_2') + '</span>';
+      document.getElementById('news-view-all').textContent = t('news.view_all');
+
+      const news = articles.filter(a => a.status === 'published').sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
+      const featured = news[0];
+      const rest = news.slice(1, 4);
+      let newsHTML = '';
+      if (featured) {
+        const tagClass = featured.type === 'news' ? 'news-tag-gold' : 'news-tag-crimson';
+        newsHTML += `<div class="news-featured glass-card aos-up">
+          ${featured.image_url ? `<img src="${featured.image_url}" loading="lazy" class="news-featured-img" alt="${featured.title}">` : ''}
+          <div class="news-featured-inner">
+            <div class="news-featured-top"><span class="news-featured-badge">${t('news.featured')}</span><span class="news-tag ${tagClass}">${featured.type === 'news' ? t('news.type_news') : t('news.type_event')}</span></div>
+            <h3 class="news-featured-title">${featured.title}</h3>
+            <p class="news-featured-excerpt">${featured.summary}</p>
+            <div class="news-featured-footer"><span class="news-date">${new Date(featured.published_at).toLocaleDateString()}</span><a href="article.html?id=${featured.id}" class="news-read-more">${t('news.read_full')}</a></div>
+          </div>
+        </div>`;
+      }
+      if (rest.length) {
+        newsHTML += `<div class="news-list">${rest.map(a => {
+          const tagClass = a.type === 'news' ? 'news-tag-gold' : 'news-tag-crimson';
+          return `<div class="news-card glass aos-up">
+            ${a.image_url ? `<img src="${a.image_url}" loading="lazy" class="news-card-img" alt="${a.title}">` : ''}
+            <div class="news-card-top"><span class="news-tag ${tagClass}">${a.type === 'news' ? t('news.type_news') : t('news.type_event')}</span><span class="news-date">${new Date(a.published_at).toLocaleDateString()}</span></div>
+            <h4 class="news-card-title">${a.title}</h4>
+            <p class="news-card-excerpt">${a.summary}</p>
+            <div class="news-card-footer"><span class="news-read-time">By ${a.author || 'Department'}</span><a href="article.html?id=${a.id}" class="news-read-more">${t('news.read_more')}</a></div>
+          </div>`;
+        }).join('')}</div>`;
+      }
+      if (!featured && !rest.length) newsHTML = `<p style="text-align:center;color:var(--text-muted);padding:40px 0;grid-column:1/-1">No published articles yet.</p>`;
+      document.getElementById('news-grid').innerHTML = newsHTML;
+
+      // ── Classes ──
+      document.getElementById('classes-label').textContent = t('classes.label');
+      document.getElementById('classes-title').innerHTML = t('classes.title_1') + ' <span class="text-gradient-gold">' + t('classes.title_2') + '</span>';
+      document.getElementById('classes-subtitle').textContent = t('classes.subtitle');
+      document.getElementById('classes-view-all').textContent = t('classes.view_all');
+
+      const colors = ['var(--gold)', 'var(--crimson-light)', '#7eb3f9', '#6a78a0'];
+      const maxYear = cohorts.length > 0 ? Math.max(...cohorts.map(c => c.year)) : currentYear;
+      document.getElementById('classes-grid').innerHTML = cohorts.slice(0, 4).map((c, i) => {
+        const accent = colors[i % colors.length];
+        const yearNum = maxYear - c.year + 1;
+        return `<div class="classes-card glass-card aos-up" data-aos-delay="${i * 100}">
+          <div class="classes-stripe" style="background:${accent}" aria-hidden="true"></div>
+          <div class="classes-card-header">
+            <div>
+              <span class="classes-cohort-label" style="color:${accent}">${c.title}</span>
+              <h3 class="classes-card-title">${t('classes.year_prefix')} ${yearNum}</h3>
+            </div>
+            <span class="classes-status-badge"><span class="classes-status-dot"></span>${c.status}</span>
+          </div>
+          <div class="classes-stats-row">
+            <span class="classes-stat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t('classes.students')}: ${c.student_count}</span>
+            <span class="classes-stat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${t('classes.rep')} ${c.rep_name}</span>
+          </div>
+          <a href="classes.html" class="classes-view-btn" style="color:${accent}">${t('classes.view_hub')}</a>
+        </div>`;
+      }).join('');
+
+      // Re-init animations for dynamic content
+      initAnimateOnScroll();
+      initCountUp();
+    });
+  </script>
+</body>
+</html>

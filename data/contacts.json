@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1777547616090,
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "General",
+    "message": "This is a test message to verify the contact form is working properly on the Alfarabi platform.",
+    "submitted_at": "2026-04-30T11:13:36.090Z",
+    "ip": "::1",
+    "read": false
+  }
+]

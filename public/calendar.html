@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Calendar — Alfarabi University AI Engineering</title>
+  <meta name="description" content="All upcoming events, deadlines, and seminars across all cohorts at Al-Farabi University AI Engineering Department.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="University Calendar — Alfarabi University">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="/og-image.png">
+  <meta property="og:description" content="Stay on top of academic deadlines, seminars, and university events at Al-Farabi University.">
+  <meta property="og:url" content="https://alfarabi.edu.iq/calendar.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://alfarabi.edu.iq/calendar.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/hero.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div style="min-height:100vh;padding-top:var(--nav-height)">
+    <!-- Hero -->
+    <section style="position:relative;padding:48px 0;overflow:hidden;border-bottom:1px solid var(--glass-border)">
+      <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 70% at 80% 20%,rgba(212,175,55,0.07) 0%,transparent 65%),radial-gradient(ellipse 50% 70% at 5% 85%,rgba(165,28,48,0.06) 0%,transparent 60%)" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1">
+        <div style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-muted);margin-bottom:24px">
+          <a href="index.html" style="color:var(--text-muted);text-decoration:none" id="ev-bc-home"></a><span>/</span><span id="ev-bc-current"></span>
+        </div>
+        <div class="section-label animate-fade-in-up" style="animation-delay:100ms;opacity:0" id="ev-label"></div>
+        <h1 class="animate-fade-in-up" style="animation-delay:200ms;opacity:0;font-size:clamp(2.2rem,4.5vw,3.6rem);line-height:1.15;margin-top:8px" id="ev-title"></h1>
+        <p class="animate-fade-in-up" style="animation-delay:350ms;opacity:0;margin-top:14px;color:var(--text-secondary);font-size:1rem;max-width:560px" id="ev-sub"></p>
+      </div>
+      <div class="orb" style="width:260px;height:260px;top:-30px;right:6%;background:rgba(212,175,55,0.06)" aria-hidden="true"></div>
+    </section>
+
+    <section class="cal-section" style="padding-top:40px">
+      <div class="container">
+        <div class="cal-events" id="ev-events"></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="footer-root"></div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+      await initPage();
+      renderSkeleton('#ev-events', 'calendar', 5);
+      const articles = (await getArticles()) || [];
+
+      document.getElementById('ev-bc-home').textContent = t('common.home');
+      document.getElementById('ev-bc-current').textContent = t('nav.calendar');
+      document.getElementById('ev-label').textContent = t('cal.page_label');
+      document.getElementById('ev-title').innerHTML = t('cal.page_title_1') + ' <span class="text-gradient-gold">' + t('cal.page_title_2') + '</span>';
+      document.getElementById('ev-sub').textContent = t('cal.page_subtitle');
+
+      const events = articles.filter(a => a.type === 'event' && a.status === 'published').sort((a,b) => new Date(a.event_date||a.published_at) - new Date(b.event_date||b.published_at));
+      const catColors = { seminar: 'gold', exam: 'crimson', deadline: 'crimson', social: 'blue', lecture: 'gold', workshop: 'blue', other: 'gold' };
+
+      if (events.length === 0) {
+        document.getElementById('ev-events').innerHTML = `<div class="glass-card" style="padding:60px 40px;text-align:center"><h3 style="font-size:1.2rem;color:var(--text-primary);margin-bottom:12px">${t('cal.no_events_title')}</h3><p style="color:var(--text-muted);font-size:0.9rem">${t('cal.no_events_desc')} <a href="news.html" style="color:var(--gold)">${t('cal.news_link')}</a> page.</p></div>`;
+      } else {
+        document.getElementById('ev-events').innerHTML = events.map((ev, i) => {
+          const d = new Date(ev.event_date || ev.published_at);
+          const day = d.getDate();
+          const month = d.toLocaleString('en', { month: 'short' });
+          const cat = catColors[ev.category] || 'gold';
+          return `<div class="cal-card glass aos-up" data-aos-delay="${i*60}">
+            <div class="cal-date-badge"><span class="cal-date-day">${day}</span><span class="cal-date-month">${month}</span></div>
+            <div class="cal-event-info">
+              <span class="cal-category cal-cat-${cat}">${ev.category || 'event'}</span>
+              <div class="cal-event-title">${ev.title}</div>
+              <p style="font-size:0.83rem;color:var(--text-muted);margin:4px 0 10px;line-height:1.5">${ev.summary}</p>
+              <div class="cal-event-meta">
+                ${ev.time ? `<span class="cal-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${ev.time}</span>` : ''}
+                ${ev.location ? `<span class="cal-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${ev.location}</span>` : ''}
+                ${ev.cohort ? `<span class="cal-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${ev.cohort}</span>` : ''}
+              </div>
+            </div>
+            <svg class="cal-event-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>`;
+        }).join('');
+      }
+
+      initAnimateOnScroll();
+      } catch (err) {
+        console.error('Calendar page error:', err);
+        renderError('#ev-events', { title: 'Could not load events', message: 'There was a problem fetching calendar data. Please try again.', retry: true });
+      }
+    });
+  </script>
+</body>
+</html>

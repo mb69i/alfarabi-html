@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes &amp; Cohorts — Alfarabi University AI Engineering</title>
+  <meta name="description" content="Browse all active AI Engineering cohorts and student groups at Al-Farabi University, Baghdad.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Classes &amp; Cohorts — Alfarabi University">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="/og-image.png">
+  <meta property="og:description" content="Active AI Engineering cohorts, student counts, and class representatives at Al-Farabi University.">
+  <meta property="og:url" content="https://alfarabi.edu.iq/classes.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://alfarabi.edu.iq/classes.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/classes.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div class="classes-page">
+    <section class="classes-hero">
+      <div class="classes-hero-bg" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1">
+        <div class="classes-breadcrumb"><a href="index.html" id="cl-bc-home"></a><span>/</span><span id="cl-bc-current"></span></div>
+        <div class="section-label animate-fade-in-up" style="animation-delay:100ms;opacity:0" id="cl-label"></div>
+        <h1 class="classes-hero-title animate-fade-in-up" style="animation-delay:200ms;opacity:0" id="cl-hero-title"></h1>
+        <p class="classes-hero-subtitle animate-fade-in-up" style="animation-delay:330ms;opacity:0" id="cl-hero-sub"></p>
+      </div>
+      <div class="orb" style="width:280px;height:280px;top:-40px;right:5%;background:rgba(212,175,55,0.07)" aria-hidden="true"></div>
+    </section>
+
+    <div class="classes-stats-strip">
+      <div class="container"><div class="classes-stats-strip-grid" id="cl-stats-strip"></div></div>
+    </div>
+
+    <section class="classes-page-section">
+      <div class="container"><div class="classes-page-grid" id="cl-grid"></div></div>
+    </section>
+  </div>
+
+  <div id="footer-root"></div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+      await initPage();
+      const cohorts = (await getCohorts()) || [];
+
+      document.getElementById('cl-bc-home').textContent = t('common.home');
+      document.getElementById('cl-bc-current').textContent = t('nav.classes');
+      document.getElementById('cl-label').textContent = t('classes.label');
+      document.getElementById('cl-hero-title').innerHTML = t('classes.page_title_1') + ' <span class="text-gradient-gold">' + t('classes.page_title_2') + '</span>';
+
+      const total = cohorts.reduce((s,c)=>s+c.student_count, 0);
+      const activeCount = cohorts.filter(c=>c.status==='active').length;
+      document.getElementById('cl-hero-sub').textContent = `${cohorts.length} active cohorts · ${total.toLocaleString()} enrolled students · Al-Farabi University, Baghdad`;
+
+      document.getElementById('cl-stats-strip').innerHTML = [
+        { num: total, label: t('classes.total_students') },
+        { num: cohorts.length, label: t('classes.active_cohorts') },
+        { num: activeCount, label: t('classes.active_classes') },
+        { num: cohorts.length, label: t('classes.class_reps') },
+      ].map(s => `<div class="classes-strip-stat"><span class="classes-strip-num">${s.num}</span><span class="classes-strip-label">${s.label}</span></div>`).join('');
+
+      const colors = ['var(--gold)', 'var(--crimson-light)', '#7eb3f9', '#6a78a0'];
+      const maxYear = cohorts.length > 0 ? Math.max(...cohorts.map(c => c.year)) : new Date().getFullYear();
+      document.getElementById('cl-grid').innerHTML = cohorts.map((c, i) => {
+        const accent = colors[i % colors.length];
+        const year = maxYear - c.year + 1;
+        return `<article class="classes-page-card glass-card aos-up" data-aos-delay="${i*100}">
+          <div class="classes-top-bar" style="background:${accent}"></div>
+          <div class="classes-card-inner">
+            <div class="classes-card-header" style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div><span class="classes-cohort-badge" style="color:${accent}">${c.title}</span><h2 class="classes-card-page-title">${t('classes.year_prefix')} ${year}</h2></div>
+              <div class="classes-active-badge"><span class="classes-active-dot" style="animation:dotPulse 2s ease-in-out infinite"></span>${c.status}</div>
+            </div>
+            <p class="classes-card-desc">${c.description}</p>
+            <div class="classes-info-grid">
+              <div class="classes-info-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><div><span class="classes-info-label">${t('classes.students')}</span><span class="classes-info-value" style="color:${accent}">${c.student_count}</span></div></div>
+              <div class="classes-info-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div><span class="classes-info-label">${t('classes.representative')}</span><span class="classes-info-value">${c.rep_name}</span></div></div>
+            </div>
+            <a href="#" class="classes-cta" style="border-color:${accent};color:${accent}">${t('classes.view_hub')} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </article>`;
+      }).join('');
+
+      initAnimateOnScroll();
+      } catch (err) {
+        console.error('Classes page error:', err);
+        renderError('#cl-grid', { title: 'Could not load classes', message: 'There was a problem fetching cohort data. Please try again.', retry: true });
+      }
+    });
+  </script>
+</body>
+</html>

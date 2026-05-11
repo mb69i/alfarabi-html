@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portfolio — Alfarabi University AI Engineering</title>
+  <meta name="description" content="Explore student AI Engineering projects at Al-Farabi University — NLP models, robotics, computer vision, and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Student Portfolio — Alfarabi University">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="/og-image.png">
+  <meta property="og:description" content="Discover innovative AI projects built by Al-Farabi University students across all cohorts.">
+  <meta property="og:url" content="https://alfarabi.edu.iq/portfolio.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://alfarabi.edu.iq/portfolio.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/portfolio.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div class="portfolio-page">
+    <section class="portfolio-hero">
+      <div class="portfolio-hero-bg" aria-hidden="true"></div>
+      <div class="container portfolio-hero-content">
+        <div class="portfolio-breadcrumb">
+          <a href="index.html" id="pf-bc-home"></a><span>/</span><span id="pf-bc-current"></span>
+        </div>
+        <div class="section-label animate-fade-in-up" style="animation-delay:100ms;opacity:0" id="pf-label"></div>
+        <h1 class="portfolio-hero-title animate-fade-in-up" style="animation-delay:200ms;opacity:0" id="pf-title"></h1>
+        <p class="portfolio-hero-sub animate-fade-in-up" style="animation-delay:350ms;opacity:0" id="pf-sub"></p>
+      </div>
+      <div class="orb" style="width:280px;height:280px;top:-40px;right:5%;background:rgba(165,28,48,0.06)" aria-hidden="true"></div>
+    </section>
+
+    <section style="padding:40px 0 0">
+      <div class="container">
+        <div class="portfolio-filters" id="pf-filters"></div>
+        <div class="portfolio-grid" id="pf-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="footer-root"></div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+      await initPage();
+      renderSkeleton('#pf-grid', 'portfolio', 6);
+      const allProjects = (await getProjects()) || [];
+      const projects = allProjects.filter(p => p.status === 'approved');
+
+      document.getElementById('pf-bc-home').textContent = t('common.home');
+      document.getElementById('pf-bc-current').textContent = t('nav.portfolio');
+      document.getElementById('pf-label').textContent = t('portfolio.label');
+      document.getElementById('pf-title').innerHTML = t('portfolio.title_1') + ' <span class="text-gradient-gold">' + t('portfolio.title_2') + '</span>';
+      document.getElementById('pf-sub').textContent = t('portfolio.subtitle');
+
+      // Collect tags
+      const allTags = new Set();
+      projects.forEach(p => (p.tags || []).forEach(t => allTags.add(t)));
+      const tags = Array.from(allTags);
+
+      let currentFilter = 'all';
+
+      function renderFilters() {
+        let html = `<button class="portfolio-filter-btn ${currentFilter==='all'?'active':''}" onclick="filterProjects('all')">${t('portfolio.filter_all')}</button>`;
+        tags.forEach(tag => {
+          html += `<button class="portfolio-filter-btn ${currentFilter===tag?'active':''}" onclick="filterProjects('${tag}')">${tag}</button>`;
+        });
+        document.getElementById('pf-filters').innerHTML = html;
+      }
+
+      function renderProjects() {
+        const filtered = currentFilter === 'all' ? projects : projects.filter(p => (p.tags||[]).includes(currentFilter));
+        if (filtered.length === 0) {
+          document.getElementById('pf-grid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 0"><p style="color:var(--text-muted);font-size:0.95rem">${t('portfolio.no_projects')}</p></div>`;
+          return;
+        }
+        const colors = ['var(--gold)', 'var(--crimson-light)', '#7eb3f9', '#a78bfa', '#34d399', '#f97066'];
+        document.getElementById('pf-grid').innerHTML = filtered.map((p, i) => {
+          const accent = colors[i % colors.length];
+          return `<div class="portfolio-card glass-card aos-up" data-aos-delay="${i*60}">
+            <div class="portfolio-card-accent" style="background:${accent}"></div>
+            <div class="portfolio-card-body">
+              <div class="portfolio-card-header">
+                <h3 class="portfolio-card-title">${p.title}</h3>
+              </div>
+              <p class="portfolio-card-desc">${p.description}</p>
+              <div class="portfolio-card-meta">
+                <span class="portfolio-card-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${p.student_name}</span>
+                <span class="portfolio-card-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>${p.cohort}</span>
+              </div>
+              <div class="portfolio-card-tags">${(p.tags||[]).map(tag=>`<span class="portfolio-card-tag">${tag}</span>`).join('')}</div>
+              <div class="portfolio-card-links">
+                ${p.github_url ? `<a href="${p.github_url}" target="_blank" rel="noopener" class="portfolio-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>${t('portfolio.github')}</a>` : ''}
+                ${p.demo_url ? `<a href="${p.demo_url}" target="_blank" rel="noopener" class="portfolio-card-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>${t('portfolio.demo')}</a>` : ''}
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+        initAnimateOnScroll();
+      }
+
+      window.filterProjects = function(filter) {
+        currentFilter = filter;
+        renderFilters();
+        renderProjects();
+      };
+
+      renderFilters();
+      renderProjects();
+      } catch (err) {
+        console.error('Portfolio page error:', err);
+        renderError('#pf-grid', { title: 'Could not load projects', message: 'There was a problem fetching project data. Please try again.', retry: true });
+      }
+    });
+  </script>
+</body>
+</html>

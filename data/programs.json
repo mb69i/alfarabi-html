@@ -1,0 +1,120 @@
+{
+  "flagship": {
+    "heading": "B.Sc. AI Engineering",
+    "ar_heading": "بكالوريوس هندسة الذكاء الاصطناعي",
+    "title": "Comprehensive AI Engineering",
+    "ar_title": "درجة هندسة ذكاء اصطناعي",
+    "title_accent": "Degree",
+    "ar_title_accent": "شاملة",
+    "desc": "A rigorous 4-year program combining software engineering, machine learning, and data science with hands-on industry projects.",
+    "ar_desc": "برنامج أكاديمي صارم مدته 4 سنوات يجمع بين هندسة البرمجيات والتعلم الآلي وعلوم البيانات مع مشاريع صناعية عملية.",
+    "highlights": "240 ECTS Credits, 4 Year Duration, Industry Projects",
+    "ar_highlights": "240 ساعة ECTS، مدة 4 سنوات، مشاريع صناعية",
+    "stats": [
+      {
+        "icon": "📚",
+        "num": "240",
+        "label": "ECTS Credits",
+        "ar_label": "ساعات ECTS",
+        "color": "rgba(212,175,55,0.1)"
+      },
+      {
+        "icon": "🎓",
+        "num": "4",
+        "label": "Year Duration",
+        "ar_label": "مدة الدراسة",
+        "color": "rgba(165,28,48,0.1)"
+      },
+      {
+        "icon": "🏢",
+        "num": "12+",
+        "label": "Industry Partners",
+        "ar_label": "شركاء الصناعة",
+        "color": "rgba(126,179,249,0.1)"
+      }
+    ]
+  },
+  "programs": [
+    {
+      "id": "p1",
+      "title": "B.Sc. AI Engineering",
+      "ar_title": "بكالوريوس هندسة الذكاء الاصطناعي",
+      "desc": "Comprehensive undergraduate program covering machine learning, deep learning, NLP, and robotics.",
+      "ar_desc": "برنامج بكالوريوس شامل يغطي التعلم الآلي والتعلم العميق ومعالجة اللغات الطبيعية والروبوتات.",
+      "duration": "4 years",
+      "ar_duration": "4 سنوات",
+      "icon": "🤖",
+      "color": "var(--gold)",
+      "badge": "Bachelor's",
+      "ar_badge": "بكالوريوس",
+      "modules": [
+        "Machine Learning",
+        "Deep Learning",
+        "Computer Vision",
+        "NLP",
+        "Software Engineering"
+      ],
+      "order": 1
+    },
+    {
+      "id": "p4",
+      "title": "Data Science Track",
+      "ar_title": "مسار علوم البيانات",
+      "desc": "Specialized track focusing on big data analytics, statistical modeling, and data engineering.",
+      "ar_desc": "مسار متخصص في تحليل البيانات الضخمة والنمذجة الإحصائية وهندسة البيانات.",
+      "duration": "4 years",
+      "ar_duration": "4 سنوات",
+      "icon": "📊",
+      "color": "#a78bfa",
+      "badge": "Specialization",
+      "ar_badge": "تخصص",
+      "modules": [
+        "Big Data",
+        "Statistics",
+        "Data Mining",
+        "Visualization"
+      ],
+      "order": 2
+    },
+    {
+      "id": "p5",
+      "title": "Cybersecurity & AI",
+      "ar_title": "الأمن السيبراني والذكاء الاصطناعي",
+      "desc": "Joint program combining AI techniques with cybersecurity for next-gen threat detection.",
+      "ar_desc": "برنامج مشترك يجمع بين تقنيات الذكاء الاصطناعي والأمن السيبراني لاكتشاف التهديدات من الجيل التالي.",
+      "duration": "4 years",
+      "ar_duration": "4 سنوات",
+      "icon": "🛡️",
+      "color": "#f97066",
+      "badge": "Joint Program",
+      "ar_badge": "برنامج مشترك",
+      "modules": [
+        "Network Security",
+        "AI for Security",
+        "Cryptography",
+        "Ethical Hacking"
+      ],
+      "order": 3
+    }
+  ],
+  "requirements": {
+    "bsc_title": "B.Sc. Requirements",
+    "ar_bsc_title": "متطلبات البكالوريوس",
+    "bsc_items": [
+      "High school diploma with minimum 70% in STEM subjects",
+      "Proficiency in English (IELTS 5.5+ or equivalent)",
+      "Mathematics & Physics entrance exam",
+      "Personal statement & motivation letter"
+    ],
+    "ar_bsc_items": [
+      "شهادة الثانوية العامة بمعدل لا يقل عن 70% في مواد العلوم والتقنية والهندسة والرياضيات",
+      "إجادة اللغة الإنجليزية (IELTS 5.5 أو ما يعادله)",
+      "اختبار قبول في الرياضيات والفيزياء",
+      "خطاب الدوافع الشخصية"
+    ],
+    "msc_title": ".",
+    "ar_msc_title": "",
+    "msc_items": [],
+    "ar_msc_items": []
+  }
+}

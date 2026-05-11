@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Dashboard — Alfarabi University</title>
+  <meta name="description" content="Owner control panel for Alfarabi University AI Engineering platform.">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    .owner-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 20px;
+      background: linear-gradient(135deg, rgba(165,28,48,0.15), rgba(212,175,55,0.1));
+      border: 1px solid rgba(165,28,48,0.35);
+      color: var(--crimson-light); font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .owner-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--crimson-light);
+      box-shadow: 0 0 6px rgba(165,28,48,0.6);
+      animation: ownerPulse 2s ease-in-out infinite;
+    }
+    @keyframes ownerPulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(165,28,48,0.6); }
+      50% { opacity: 0.5; box-shadow: 0 0 12px rgba(165,28,48,0.8); }
+    }
+    .pw-panel {
+      background: linear-gradient(135deg, rgba(165,28,48,0.06), rgba(212,175,55,0.04));
+      border: 1px solid rgba(165,28,48,0.2);
+      border-radius: 16px; padding: 24px 28px; margin-bottom: 24px;
+    }
+    .pw-title {
+      font-size: 1rem; font-weight: 700; color: var(--text-primary);
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+    .pw-input-group {
+      display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;
+    }
+    .pw-input-group .admin-form-group { flex: 1; min-width: 200px; }
+    .pw-note {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; line-height: 1.5;
+    }
+    .pw-current {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border);
+      border-radius: 8px; padding: 8px 14px; font-family: monospace;
+      font-size: 0.85rem; color: var(--text-primary); margin-bottom: 12px;
+    }
+    .pw-eye {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      font-size: 0.85rem; padding: 2px 4px; transition: color 0.2s;
+    }
+    .pw-eye:hover { color: var(--gold); }
+    @media (max-width: 640px) {
+      .pw-input-group { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div class="admin-page">
+    <!-- Top Bar -->
+    <div class="admin-top-bar">
+      <div class="admin-top-inner">
+        <div class="admin-top-left">
+          <h1 class="admin-top-title">Owner Dashboard</h1>
+          <p class="admin-top-sub">Full System Access · Owner Mode</p>
+        </div>
+        <div class="admin-top-right">
+          <span class="owner-badge"><span class="owner-dot"></span> Owner</span>
+          <a href="admin.html" class="btn-gold" style="padding:8px 18px;font-size:0.82rem;text-decoration:none">Admin View →</a>
+          <button class="admin-logout-btn" onclick="handleLogout()">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Tabs -->
+    <div class="admin-mobile-tabs">
+      <div class="admin-mobile-tabs-scroll" id="admin-mobile-tabs"></div>
+    </div>
+
+    <!-- Layout -->
+    <div class="admin-layout">
+      <aside class="admin-sidebar" id="admin-sidebar"></aside>
+      <main class="admin-main" id="admin-main-content">
+        <div style="text-align:center;padding:80px 0;color:var(--text-muted)">Loading owner dashboard…</div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin-core.js"></script>
+  <script src="js/admin-content.js"></script>
+  <script src="js/admin-about.js"></script>
+  <script src="js/admin-programs.js"></script>
+  <script src="js/admin-modals.js"></script>
+  <script src="js/admin-views.js"></script>
+  <script>
+    // Override sideItems for owner (add password change)
+    const ownerSideItems = [
+      { label: 'Dashboard', icon: '▦', section: 'Overview' },
+      { label: 'Admin Password', icon: '🔐', section: 'Owner Controls' },
+      ...sideItems.filter(i => i.label !== 'Dashboard'),
+    ];
+
+    // Override the sideItems used by admin.js
+    sideItems.length = 0;
+    ownerSideItems.forEach(i => sideItems.push(i));
+
+    // Password state
+    let showCurrentPw = false;
+    let currentPwValue = null;
+
+    // Override renderAdmin to add password section
+    const originalRenderAdmin = renderAdmin;
+    renderAdmin = function() {
+      if (adminState.active === 'Admin Password') {
+        const main = document.getElementById('admin-main-content');
+        main.innerHTML = renderPasswordPanel();
+        // Update sidebar/tabs active state
+        document.querySelectorAll('.admin-sidebar-link').forEach(el => {
+          el.classList.toggle('active', el.dataset.label === adminState.active);
+        });
+        document.querySelectorAll('.admin-mobile-tab').forEach(el => {
+          el.classList.toggle('active', el.dataset.label === adminState.active);
+        });
+        return;
+      }
+      originalRenderAdmin();
+    };
+
+    function renderPasswordPanel() {
+      return `
+        <div class="pw-panel">
+          <div class="pw-title">🔐 Change Admin Password</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:20px;line-height:1.6">
+            As the system owner, you can change the admin password at any time. The admin uses this password to log into the CMS dashboard.
+          </p>
+
+          <div style="margin-bottom:20px">
+            <div class="admin-label" style="margin-bottom:8px">Current Admin Password</div>
+            <div class="pw-current">
+              <span id="pw-display">${showCurrentPw && currentPwValue ? esc(currentPwValue) : '••••••••'}</span>
+              <button class="pw-eye" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
+                ${showCurrentPw ? '🙈' : '👁️'}
+              </button>
+            </div>
+            <div style="font-size:0.72rem;color:var(--text-muted)">
+              Click the eye icon to reveal the current admin password.
+            </div>
+          </div>
+
+          <div class="pw-input-group">
+            <div class="admin-form-group">
+              <label class="admin-label" for="new-admin-pw">New Password</label>
+              <input id="new-admin-pw" type="password" class="admin-input" placeholder="Enter new password…" autocomplete="off">
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-label" for="confirm-admin-pw">Confirm Password</label>
+              <input id="confirm-admin-pw" type="password" class="admin-input" placeholder="Confirm new password…" autocomplete="off">
+            </div>
+            <button class="btn-primary" onclick="changeAdminPassword()" style="padding:10px 24px;font-size:0.85rem;white-space:nowrap;height:fit-content">
+              🔑 Change Password
+            </button>
+          </div>
+
+          <p class="pw-note">
+            ⚠️ The password change takes effect immediately. The admin will need to use the new password to log in next time.
+          </p>
+        </div>
+      `;
+    }
+
+    async function togglePasswordVisibility() {
+      if (!showCurrentPw && !currentPwValue) {
+        try {
+          const res = await fetch('/api/owner/get-password');
+          const data = await res.json();
+          if (data.success) currentPwValue = data.password;
+        } catch { /* ignore */ }
+      }
+      showCurrentPw = !showCurrentPw;
+      renderAdmin();
+    }
+
+    async function changeAdminPassword() {
+      const newPw = document.getElementById('new-admin-pw').value;
+      const confirmPw = document.getElementById('confirm-admin-pw').value;
+
+      if (!newPw.trim()) { flash('error', 'Please enter a new password.'); return; }
+      if (newPw !== confirmPw) { flash('error', 'Passwords do not match.'); return; }
+      if (newPw.trim().length < 4) { flash('error', 'Password must be at least 4 characters.'); return; }
+
+      try {
+        const res = await fetch('/api/owner/change-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ newPassword: newPw.trim() }),
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error);
+        flash('success', 'Admin password changed successfully!');
+        currentPwValue = newPw.trim(); // Update cached value
+        showCurrentPw = false;
+        renderAdmin();
+      } catch (err) {
+        flash('error', err.message || 'Failed to change password.');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initPage();
+
+      // Verify owner access
+      const res = await fetch('/api/admin-auth/check');
+      const authData = await res.json();
+      if (!authData.isOwner) {
+        window.location.href = 'sign-in.html';
+        return;
+      }
+
+      // Build sidebar
+      const sidebar = document.getElementById('admin-sidebar');
+      let sideHTML = '';
+      let currentSection = '';
+      sideItems.forEach(item => {
+        if (item.section !== currentSection) {
+          currentSection = item.section;
+          sideHTML += `<div class="admin-sidebar-section"><div class="admin-sidebar-label">${currentSection}</div>`;
+        }
+        sideHTML += `<button class="admin-sidebar-link" data-label="${item.label}" onclick="setActiveSection('${item.label}')">${item.icon} ${item.label}</button>`;
+      });
+      sideHTML += '</div>';
+      sidebar.innerHTML = sideHTML;
+
+      // Build mobile tabs
+      const mobileTabs = document.getElementById('admin-mobile-tabs');
+      mobileTabs.innerHTML = sideItems.map(item =>
+        `<button class="admin-mobile-tab" data-label="${item.label}" onclick="setActiveSection('${item.label}')">${item.icon} ${item.label}</button>`
+      ).join('');
+
+      await initAdmin();
+    });
+  </script>
+</body>
+</html>

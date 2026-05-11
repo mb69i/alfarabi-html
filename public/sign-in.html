@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Sign In — Alfarabi University</title>
+  <meta name="description" content="Admin sign in portal for Alfarabi University AI Engineering Department.">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div class="auth-page">
+    <div class="auth-bg" aria-hidden="true"></div>
+    <div class="auth-container">
+      <div class="auth-left">
+        <div class="auth-brand">
+          <div class="auth-logo-box">
+            <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="10" fill="rgba(212,175,55,0.15)"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="var(--gold)" font-size="22" font-weight="700" font-family="serif">F</text></svg>
+          </div>
+          <div>
+            <div class="auth-brand-name">Alfarabi University</div>
+            <div class="auth-brand-sub">AI Engineering Department</div>
+          </div>
+        </div>
+        <div class="auth-left-content">
+          <h1 class="auth-left-title">Platform <span class="text-gradient-gold">Management</span></h1>
+          <p class="auth-left-desc">Secure login portal for University Administrators.</p>
+        </div>
+      </div>
+
+      <div class="auth-right">
+        <div class="auth-form-card">
+          <div class="auth-form-header">
+            <h2 class="auth-form-title">Welcome back</h2>
+            <p class="auth-form-sub">Enter your admin password to continue</p>
+          </div>
+          <div id="auth-alert"></div>
+          <form class="auth-form" id="signin-form" autocomplete="off">
+            <div class="auth-field-group">
+              <label for="signin-password" class="auth-label">Admin Password</label>
+              <div class="auth-input-wrap">
+                <svg class="auth-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                <input id="signin-password" type="password" class="auth-input" placeholder="••••••••" required autofocus autocomplete="off">
+              </div>
+            </div>
+            <button type="submit" class="auth-submit-btn btn-primary" id="signin-submit-btn">
+              Access CMS
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initPage();
+
+      const form = document.getElementById('signin-form');
+      const alertDiv = document.getElementById('auth-alert');
+      const submitBtn = document.getElementById('signin-submit-btn');
+      const passwordInput = document.getElementById('signin-password');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertDiv.innerHTML = '';
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="auth-spinner"></span> Authenticating…';
+
+        const password = passwordInput.value;
+        try {
+          const res = await fetch('/api/admin-auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password }),
+          });
+          const data = await res.json();
+          if (!data.success) throw new Error(data.error || 'Invalid password.');
+
+          // Clear the password field immediately
+          passwordInput.value = '';
+
+          alertDiv.innerHTML = '<div class="auth-alert-success"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Access granted! Redirecting…</div>';
+
+          // Redirect based on role
+          const redirectTo = data.role === 'owner' ? 'owner.html' : 'admin.html';
+          setTimeout(() => { window.location.href = redirectTo; }, 800);
+        } catch (err) {
+          alertDiv.innerHTML = `<div class="auth-alert-error"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${err.message}</div>`;
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Access CMS <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

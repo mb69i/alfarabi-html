@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — Alfarabi University</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Return to Alfarabi University AI Engineering Department.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--nav-height) 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .error-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(165,28,48,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(212,175,55,0.06) 0%, transparent 55%);
+    }
+    .error-container {
+      position: relative; z-index: 1;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .error-code {
+      font-family: var(--font-serif);
+      font-size: clamp(6rem, 18vw, 10rem);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--crimson) 0%, var(--gold) 60%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      letter-spacing: -4px;
+    }
+    .error-divider {
+      width: 64px; height: 3px;
+      background: linear-gradient(90deg, var(--crimson), var(--gold));
+      border-radius: 2px;
+      margin: 0 auto 28px;
+    }
+    .error-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .error-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto 36px;
+    }
+    .error-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .error-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+    .error-links {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--glass-border);
+    }
+    .error-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--glass-border);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .error-link:hover {
+      border-color: rgba(212,175,55,0.35);
+      color: var(--gold);
+      background: rgba(212,175,55,0.04);
+    }
+
+    /* Light mode */
+    [data-theme="light"] .error-card {
+      background: rgba(255,252,248,0.96);
+      border-color: rgba(184,134,11,0.15);
+      box-shadow: 0 20px 60px rgba(28,23,18,0.10);
+    }
+    [data-theme="light"] .error-link {
+      border-color: rgba(184,134,11,0.16);
+      color: var(--text-secondary);
+    }
+    [data-theme="light"] .error-link:hover {
+      border-color: rgba(184,134,11,0.35);
+      color: var(--gold);
+      background: rgba(184,134,11,0.06);
+    }
+    [data-theme="light"] .error-links {
+      border-top-color: rgba(184,134,11,0.10);
+    }
+    [data-theme="light"] .error-bg {
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(184,134,11,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(165,28,48,0.04) 0%, transparent 55%);
+    }
+    @media (max-width: 480px) {
+      .error-card { padding: 36px 24px; }
+      .error-actions { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <main class="error-page">
+    <div class="error-bg" aria-hidden="true"></div>
+    <div class="error-container">
+      <div class="error-card">
+        <div class="error-code">404</div>
+        <div class="error-divider"></div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-sub">
+          The page you're looking for has moved, been removed, or never existed.
+          Let's get you back on track.
+        </p>
+        <div class="error-actions">
+          <a href="index.html" class="btn-primary" id="err-home-btn">← Back to Home</a>
+          <a href="programs.html" class="btn-gold" id="err-programs-btn">View Programs</a>
+        </div>
+        <nav class="error-links" aria-label="Quick links">
+          <a href="about.html"     class="error-link" id="err-about-link">📖 About</a>
+          <a href="news.html"      class="error-link" id="err-news-link">📰 News</a>
+          <a href="classes.html"   class="error-link" id="err-classes-link">🎓 Classes</a>
+          <a href="calendar.html"  class="error-link" id="err-cal-link">📅 Calendar</a>
+          <a href="portfolio.html" class="error-link" id="err-pf-link">🖼️ Portfolio</a>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-root"></div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initPage();
+      // Translate buttons if Arabic
+      const homeBtn = document.getElementById('err-home-btn');
+      const pgBtn   = document.getElementById('err-programs-btn');
+      if (homeBtn) homeBtn.textContent = (getLocale() === 'ar' ? '← الرئيسية' : '← Back to Home');
+      if (pgBtn)   pgBtn.textContent   = (getLocale() === 'ar' ? 'عرض البرامج' : 'View Programs');
+    });
+  </script>
+</body>
+</html>

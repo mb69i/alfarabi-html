@@ -1,0 +1,6 @@
+[
+  { "id": "v1", "icon": "🔬", "title": "Research Excellence", "ar_title": "التميز البحثي", "desc": "Cutting-edge AI research published in top-tier international journals and conferences.", "ar_desc": "أبحاث ذكاء اصطناعي متطورة تُنشر في أعلى المجلات العلمية الدولية.", "color": "var(--gold)", "order": 1 },
+  { "id": "v2", "icon": "🤝", "title": "Community & Collaboration", "ar_title": "المجتمع والتعاون", "desc": "A supportive academic community where students and faculty collaborate on real-world projects.", "ar_desc": "مجتمع أكاديمي داعم يتعاون فيه الطلاب والأساتذة على مشاريع حقيقية.", "color": "var(--crimson-light)", "order": 2 },
+  { "id": "v3", "icon": "💼", "title": "Industry Partnerships", "ar_title": "شراكات صناعية", "desc": "Partnerships with tech companies ensure graduates are job-ready from day one.", "ar_desc": "شراكات مع شركات التقنية تضمن جاهزية الخريجين لسوق العمل من اليوم الأول.", "color": "#7eb3f9", "order": 3 },
+  { "id": "v4", "icon": "⚖️", "title": "Ethical AI", "ar_title": "ذكاء اصطناعي أخلاقي", "desc": "AI Ethics and Governance is a core part of every year's curriculum, not an afterthought.", "ar_desc": "أخلاقيات الذكاء الاصطناعي وحوكمته جزء أساسي من المنهج في كل سنة، وليس إضافة لاحقة.", "color": "#a78bfa", "order": 4 }
+]

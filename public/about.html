@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Alfarabi University AI Engineering</title>
+  <meta name="description" content="Learn about Al-Farabi University's AI Engineering Department — our mission, faculty, history, and values.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About — Alfarabi University AI Engineering">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="/og-image.png">
+  <meta property="og:description" content="Our mission, values, faculty, and history at Al-Farabi University AI Engineering Department.">
+  <meta property="og:url" content="https://alfarabi.edu.iq/about.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://alfarabi.edu.iq/about.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Al-Farabi University",
+    "url": "https://alfarabi.edu.iq/about.html",
+    "description": "About the AI Engineering Department at Al-Farabi University"
+  }
+  </script>
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div class="about-page">
+    <!-- Hero -->
+    <section class="about-hero">
+      <div class="about-hero-bg" aria-hidden="true"></div>
+      <div class="container about-hero-content">
+        <div class="about-breadcrumb">
+          <a href="index.html" id="about-bc-home"></a><span>/</span><span id="about-bc-current"></span>
+        </div>
+        <div class="section-label animate-fade-in-up" style="animation-delay:100ms;opacity:0" id="about-label"></div>
+        <h1 class="about-hero-title animate-fade-in-up" style="animation-delay:200ms;opacity:0" id="about-hero-title"></h1>
+        <p class="about-hero-sub animate-fade-in-up" style="animation-delay:350ms;opacity:0" id="about-hero-sub"></p>
+        <div class="about-hero-stats animate-fade-in-up" style="animation-delay:450ms;opacity:0" id="about-hero-stats"></div>
+      </div>
+      <div class="orb" style="width:280px;height:280px;top:-40px;right:5%;background:rgba(212,175,55,0.07)" aria-hidden="true"></div>
+    </section>
+
+    <!-- Mission -->
+    <section class="about-mission section">
+      <div class="container">
+        <div class="about-mission-grid">
+          <div class="about-mission-left aos-up">
+            <div class="section-label" id="about-mission-label"></div>
+            <h2 class="about-section-title" id="about-mission-title"></h2>
+            <div class="divider-gold"></div>
+            <p class="about-body-text" id="about-mission-p1"></p>
+            <p class="about-body-text" id="about-mission-p2"></p>
+          </div>
+          <div class="about-values aos-right" id="about-values"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="about-timeline-section">
+      <div class="container">
+        <div class="section-label" id="about-history-label"></div>
+        <h2 class="about-section-title" id="about-history-title"></h2>
+        <div class="about-timeline" id="about-timeline"></div>
+      </div>
+    </section>
+
+    <!-- Faculty -->
+    <section class="about-faculty-section" id="faculty">
+      <div class="container">
+        <div class="section-label" id="about-faculty-label"></div>
+        <h2 class="about-section-title" id="about-faculty-title"></h2>
+        <div class="about-faculty-grid" id="about-faculty-grid"></div>
+      </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="about-contact-section" id="contact">
+      <div class="container">
+        <div class="about-contact-grid">
+          <div class="about-contact-info aos-up">
+            <div class="section-label" id="contact-label"></div>
+            <h2 class="about-section-title" id="contact-title"></h2>
+            <p class="about-body-text" id="contact-desc"></p>
+            <div class="contact-info-items" id="contact-info-items"></div>
+          </div>
+          <form class="about-contact-form glass-card aos-right" id="contact-form" novalidate>
+            <div class="contact-form-row">
+              <div class="contact-field">
+                <label class="contact-label" for="cf-name" id="lbl-name"></label>
+                <input type="text" id="cf-name" class="contact-input" maxlength="100" required>
+              </div>
+              <div class="contact-field">
+                <label class="contact-label" for="cf-email" id="lbl-email"></label>
+                <input type="email" id="cf-email" class="contact-input" maxlength="150" required>
+              </div>
+            </div>
+            <div class="contact-field">
+              <label class="contact-label" for="cf-subject" id="lbl-subject"></label>
+              <select id="cf-subject" class="contact-input contact-select" required>
+                <option value="" id="opt-ph"></option>
+                <option value="Admissions" id="opt-adm"></option>
+                <option value="Programs" id="opt-prg"></option>
+                <option value="Research" id="opt-res"></option>
+                <option value="Faculty" id="opt-fac"></option>
+                <option value="General" id="opt-gen"></option>
+              </select>
+            </div>
+            <div class="contact-field">
+              <label class="contact-label" for="cf-message" id="lbl-msg"></label>
+              <textarea id="cf-message" class="contact-input contact-textarea" maxlength="2000" rows="5" required></textarea>
+              <span class="contact-char-count" id="cf-char-count">0 / 2000</span>
+            </div>
+            <div class="contact-form-footer">
+              <div class="contact-status" id="cf-status"></div>
+              <button type="submit" class="btn-primary contact-submit" id="cf-submit">
+                <span id="cf-submit-text"></span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="footer-root"></div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initPage();
+      const s = (await getSiteSettings()) || {};
+      const currentYear = new Date().getFullYear();
+      const years = currentYear - (s.founded_year || 2018);
+
+      document.getElementById('about-bc-home').textContent = t('common.home');
+      document.getElementById('about-bc-current').textContent = t('common.about');
+      document.getElementById('about-label').textContent = t('about.label');
+      document.getElementById('about-hero-title').innerHTML = t('about.hero_title_1') + ' <span class="text-gradient-gold">' + t('about.hero_title_2') + '</span>';
+      document.getElementById('about-hero-sub').textContent =
+        (getLocale() === 'ar' ? (s.ar_about_hero_sub || t('about.hero_sub')) : (s.about_hero_sub || t('about.hero_sub')));
+
+      document.getElementById('about-hero-stats').innerHTML = [
+        { num: s.founded_year || 2018, label: t('about.founded') },
+        { num: (s.total_students || 200) + '+', label: t('about.students') },
+        { num: '15+', label: t('about.faculty_label') },
+        { num: (s.research_papers || 50) + '+', label: t('about.papers') },
+      ].map(item => `<div class="about-hero-stat"><span class="about-hero-stat-num">${item.num}</span><span class="about-hero-stat-label">${item.label}</span></div>`).join('');
+
+      // Mission
+      document.getElementById('about-mission-label').textContent = t('about.mission_label');
+      document.getElementById('about-mission-title').innerHTML = t('about.mission_title') + ' <span class="text-gradient-crimson">' + t('about.mission_title_accent') + '</span>';
+      const _ar = getLocale() === 'ar';
+      document.getElementById('about-mission-p1').textContent = (_ar && s.ar_mission_p1) ? s.ar_mission_p1 : (s.mission_p1 || t('about.mission_p1'));
+      document.getElementById('about-mission-p2').textContent = (_ar && s.ar_mission_p2) ? s.ar_mission_p2 : (s.mission_p2 || t('about.mission_p2'));
+
+
+      // Values — loaded from JSON data
+      const values = ((await getValues()) || []).sort((a,b) => (a.order||0) - (b.order||0));
+      const isAr = getLocale() === 'ar';
+      document.getElementById('about-values').innerHTML = values.length === 0
+        ? '<p style="text-align:center;color:var(--text-muted);padding:40px 0">No values added yet.</p>'
+        : values.map(v =>
+        `<div class="about-value-card glass-card"><span class="about-value-icon">${v.icon}</span><div><div class="about-value-title">${isAr && v.ar_title ? v.ar_title : v.title}</div><p class="about-value-desc">${isAr && v.ar_desc ? v.ar_desc : v.desc}</p></div></div>`
+      ).join('');
+
+
+      // Timeline — loaded from JSON data
+      document.getElementById('about-history-label').textContent = t('about.history_label');
+      // Build history title correctly for each locale to avoid doubling
+      (function() {
+        const ar = getLocale() === 'ar';
+        let phrase;
+        if (ar) {
+          // Arabic: full phrase e.g. "8 سنوات من"
+          if (years === 1) phrase = 'سنة واحدة من';
+          else if (years === 2) phrase = 'سنتان من';
+          else if (years >= 3 && years <= 10) phrase = years + ' سنوات من';
+          else phrase = years + ' سنة من';
+        } else {
+          // English: build complete phrase — "1 Year of" / "8 Years of"
+          phrase = years + (years === 1 ? ' Year of' : ' Years of');
+        }
+        document.getElementById('about-history-title').innerHTML =
+          phrase + ' <span class="text-gradient-gold">' + t('about.history_title_accent') + '</span>';
+      })();
+      const milestones = ((await getTimeline()) || []).sort((a,b) => (a.order||0) - (b.order||0));
+      const tlAr = getLocale() === 'ar';
+      const cardDir = tlAr ? ' style="direction:rtl;text-align:right"' : '';
+      let timelineHTML = '<div class="about-timeline-line"></div>';
+      milestones.forEach((m, i) => {
+        const side = i % 2 === 0 ? 'left' : 'right';
+        timelineHTML += `<div class="about-milestone about-milestone-${side}" style="animation:milestoneIn 0.5s ease both;animation-delay:${i*120}ms"><div class="about-milestone-dot"></div><div class="about-milestone-card"${cardDir}><div class="about-milestone-year">${m.year}</div><div class="about-milestone-label">${m.label}</div><p class="about-milestone-desc">${m.desc}</p></div></div>`;
+      });
+      if (milestones.length === 0) timelineHTML += '<p style="text-align:center;color:var(--text-muted);padding:40px 0">No milestones added yet.</p>';
+      const tlEl = document.getElementById('about-timeline');
+      tlEl.innerHTML = timelineHTML;
+      // Force physical LTR layout so card positions always match English (left=left, right=right)
+      tlEl.style.direction = 'ltr';
+
+
+      // Faculty — loaded from JSON data
+      document.getElementById('about-faculty-label').textContent = t('about.faculty_section_label');
+      document.getElementById('about-faculty-title').innerHTML = t('about.faculty_section_title') + ' <span class="text-gradient-gold">' + t('about.faculty_section_accent') + '</span>';
+      const faculty = ((await getFaculty()) || []).sort((a,b) => (a.order||0) - (b.order||0));
+      document.getElementById('about-faculty-grid').innerHTML = faculty.length === 0
+        ? '<p style="text-align:center;color:var(--text-muted);padding:40px 0;grid-column:1/-1">No team members added yet.</p>'
+        : faculty.map((f, i) =>
+        `<div class="about-faculty-card glass-card aos-up" data-aos-delay="${i*80}">${f.image_url ? `<img src="${f.image_url}" class="about-faculty-avatar" style="border-color:${f.color};object-fit:cover">` : `<div class="about-faculty-avatar" style="border-color:${f.color};color:${f.color}">${f.name.charAt(0)}${(f.name.split(' ').pop()||'').charAt(0)}</div>`}<div class="about-faculty-name">${f.name}</div><div class="about-faculty-role">${f.role}</div><div class="about-faculty-tags">${(f.tags||[]).map(tag=>`<span class="about-expert-tag" style="border-color:${f.color}40;color:${f.color}">${tag}</span>`).join('')}</div></div>`
+      ).join('');
+      observeNewAOS(document.getElementById('about-faculty-grid'));
+      // Enable faculty profile modals
+      initFacultyModal();
+
+      // Contact section labels
+      const contactLabel = document.getElementById('contact-label');
+      const contactTitle = document.getElementById('contact-title');
+      const contactDesc = document.getElementById('contact-desc');
+      if (contactLabel) contactLabel.textContent = t('contact.label');
+      if (contactTitle) contactTitle.innerHTML = t('contact.title') + ' <span class="text-gradient-gold">' + t('contact.title_accent') + '</span>';
+      if (contactDesc) contactDesc.textContent = t('contact.desc');
+
+      document.getElementById('contact-info-items').innerHTML = [
+        { icon: '📍', text: `${s.city || 'Baghdad'}, ${s.country || 'Iraq'}` },
+        { icon: '✉️', text: s.contact_email || 'info@alfarabi.edu.iq' },
+        { icon: '📞', text: s.phone || '+964 xxx xxx' },
+      ].map(item => `<div class="contact-info-item"><span class="contact-info-icon">${item.icon}</span><span>${item.text}</span></div>`).join('');
+
+      // Populate contact form labels & options from translations
+      const req = ` <span class="contact-required">*</span>`;
+      const lbl = (id, key) => { const el = document.getElementById(id); if (el) el.innerHTML = t(key) + req; };
+      lbl('lbl-name', 'contact.name');
+      lbl('lbl-email', 'contact.email');
+      lbl('lbl-subject', 'contact.subject');
+      lbl('lbl-msg', 'contact.message');
+      document.getElementById('cf-submit-text').textContent = t('contact.send');
+      document.getElementById('cf-name').placeholder = t('contact.name_ph');
+      document.getElementById('cf-email').placeholder = t('contact.email_ph');
+      document.getElementById('cf-message').placeholder = t('contact.message_ph');
+      document.getElementById('opt-ph').textContent  = t('contact.subject_ph');
+      document.getElementById('opt-adm').textContent = t('contact.subj_admissions');
+      document.getElementById('opt-prg').textContent = t('contact.subj_programs');
+      document.getElementById('opt-res').textContent = t('contact.subj_research');
+      document.getElementById('opt-fac').textContent = t('contact.subj_faculty');
+      document.getElementById('opt-gen').textContent = t('contact.subj_general');
+
+
+      const msgField = document.getElementById('cf-message');
+      const charCount = document.getElementById('cf-char-count');
+      const statusEl = document.getElementById('cf-status');
+      const submitBtn = document.getElementById('cf-submit');
+
+      // Character counter
+      msgField.addEventListener('input', () => {
+        charCount.textContent = `${msgField.value.length} / 2000`;
+      });
+
+      const form = document.getElementById('contact-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const subject = document.getElementById('cf-subject').value;
+        const message = msgField.value.trim();
+
+        // Validate
+        if (!name || !email || !subject || !message) {
+          showStatus('error', getLocale() === 'ar' ? 'يرجى ملء جميع الحقول المطلوبة.' : 'Please fill in all required fields.');
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showStatus('error', getLocale() === 'ar' ? 'يرجى إدخال بريد إلكتروني صحيح.' : 'Please enter a valid email address.');
+          return;
+        }
+        if (message.length < 10) {
+          showStatus('error', 'Message must be at least 10 characters.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+        showStatus('', '');
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, subject, message })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showStatus('success', '✓ Message sent! We\'ll get back to you soon.');
+            form.reset();
+            charCount.textContent = '0 / 2000';
+          } else {
+            showStatus('error', data.error || 'Failed to send. Please try again.');
+          }
+        } catch {
+          showStatus('error', 'Network error. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span>${t('contact.send')}</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`;
+
+        }
+
+        function showStatus(type, msg) {
+          statusEl.textContent = msg;
+          statusEl.className = 'contact-status' + (type ? ` contact-status-${type}` : '');
+        }
+      });
+
+      initAnimateOnScroll();
+    });
+  </script>
+
+</body>
+</html>

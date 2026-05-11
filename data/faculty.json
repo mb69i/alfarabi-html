@@ -1,0 +1,33 @@
+[
+  {
+    "id": "mo8i1atg48mcm",
+    "name": "Tabark Hashim",
+    "role": "Engineer",
+    "tags": [],
+    "color": "var(--gold)",
+    "order": 3,
+    "image_url": ""
+  },
+  {
+    "id": "mo8i85vz8udlf",
+    "name": "hind saad ",
+    "role": "Teacher",
+    "tags": [
+      "Asst. Lec."
+    ],
+    "color": "var(--crimson-light)",
+    "order": 2,
+    "image_url": ""
+  },
+  {
+    "id": "mo8ifbrpg95rw",
+    "name": "Cenaa Ghani",
+    "role": "Department Representative ",
+    "tags": [
+      "Asst. Lec."
+    ],
+    "color": "#a78bfa",
+    "order": 1,
+    "image_url": ""
+  }
+]

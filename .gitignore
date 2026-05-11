@@ -1,0 +1,30 @@
+# ── Sensitive files — NEVER commit these ──
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Uploaded user content
+uploads/
+
+# Node.js
+node_modules/
+
+# OS junk
+Thumbs.db
+.DS_Store
+Desktop.ini
+ehthumbs.db
+
+# Editor files
+*.swp
+*.swo
+*.bak
+*.tmp
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

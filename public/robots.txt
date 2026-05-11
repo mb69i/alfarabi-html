@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /owner.html
+Disallow: /sign-in.html
+Disallow: /api/
+Disallow: /data/
+
+Sitemap: https://alfarabi.edu.iq/sitemap.xml

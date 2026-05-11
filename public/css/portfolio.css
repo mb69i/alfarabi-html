@@ -1,0 +1,43 @@
+/* ─── Portfolio Page ──────────────────────────────────────────────── */
+.portfolio-page { min-height: 100vh; padding-top: var(--nav-height); }
+.portfolio-hero { position: relative; padding: 48px 0; overflow: hidden; border-bottom: 1px solid var(--glass-border); }
+.portfolio-hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 70% 80% at 85% 20%, rgba(165,28,48,0.07) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 10% 90%, rgba(212,175,55,0.05) 0%, transparent 55%); }
+.portfolio-hero-content { position: relative; z-index: 1; }
+.portfolio-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 24px; }
+.portfolio-breadcrumb a { color: var(--text-muted); transition: color 0.2s; text-decoration: none; } .portfolio-breadcrumb a:hover { color: var(--gold); }
+.portfolio-hero-title { font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-family: var(--font-serif); line-height: 1.15; margin-top: 8px; }
+.portfolio-hero-sub { margin-top: 14px; color: var(--text-secondary); font-size: 1rem; max-width: 560px; }
+.portfolio-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 32px 0; }
+.portfolio-filter-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--glass-border); background: transparent; color: var(--text-muted); font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.25s; font-family: var(--font-sans); }
+.portfolio-filter-btn:hover { border-color: rgba(212,175,55,0.3); color: var(--text-primary); }
+.portfolio-filter-btn.active { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.35); color: var(--gold); }
+.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-bottom: 80px; }
+.portfolio-card { display: flex; flex-direction: column; overflow: hidden; }
+.portfolio-card-accent { height: 3px; width: 100%; }
+.portfolio-card-body { padding: 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.portfolio-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.portfolio-card-title { font-size: 1.05rem; font-family: var(--font-serif); color: var(--text-primary); line-height: 1.3; }
+.portfolio-card-status { font-size: 0.68rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+.portfolio-card-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+.portfolio-card-meta { display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem; color: var(--text-muted); }
+.portfolio-card-meta-item { display: flex; align-items: center; gap: 6px; }
+.portfolio-card-meta-item svg { flex-shrink: 0; }
+.portfolio-card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.portfolio-card-tag { padding: 2px 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 5px; font-size: 0.68rem; color: var(--text-muted); }
+.portfolio-card-links { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--glass-border); }
+.portfolio-card-link { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--glass-border); font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); text-decoration: none; transition: all 0.25s; }
+.portfolio-card-link:hover { border-color: rgba(212,175,55,0.3); color: var(--gold); }
+@media (max-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .portfolio-grid { grid-template-columns: 1fr; } }
+
+/* --- Mobile Polish ---------------------------------------- */
+@media (max-width: 480px) {
+  .portfolio-filters { gap: 6px; margin: 20px 0; }
+  .portfolio-filter-btn { padding: 5px 12px; font-size: 0.78rem; }
+  .portfolio-hero-title { font-size: clamp(1.8rem, 7vw, 2.6rem); }
+  .portfolio-card-body { padding: 16px; }
+}
+/* --- Light Mode ------------------------------------------- */
+[data-theme=light] .portfolio-card-tag { background: rgba(184,134,11,0.06); border-color: rgba(184,134,11,0.18); color: var(--text-secondary); }
+[data-theme=light] .portfolio-card-link { border-color: rgba(184,134,11,0.18); color: var(--text-secondary); }
+[data-theme=light] .portfolio-card-link:hover { border-color: rgba(184,134,11,0.45); color: var(--gold); }

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Alfarabi University</title>
+  <meta name="description" content="Admin CMS dashboard for managing Alfarabi University AI Engineering platform.">
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div class="admin-page">
+    <!-- Top Bar -->
+    <div class="admin-top-bar">
+      <div class="admin-top-inner">
+        <div class="admin-top-left">
+          <h1 class="admin-top-title">Dashboard</h1>
+          <p class="admin-top-sub">Manage your university platform content</p>
+        </div>
+        <div class="admin-top-right">
+          <span class="admin-badge"><span class="admin-dot"></span> Admin</span>
+          <button class="admin-logout-btn" onclick="handleLogout()">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Tabs -->
+    <div class="admin-mobile-tabs">
+      <div class="admin-mobile-tabs-scroll" id="admin-mobile-tabs"></div>
+    </div>
+
+    <!-- Layout -->
+    <div class="admin-layout">
+      <!-- Sidebar -->
+      <aside class="admin-sidebar" id="admin-sidebar"></aside>
+      <!-- Main Content -->
+      <main class="admin-main" id="admin-main-content">
+        <div style="text-align:center;padding:80px 0;color:var(--text-muted)">Loading dashboard…</div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin-core.js"></script>
+  <script src="js/admin-content.js"></script>
+  <script src="js/admin-about.js"></script>
+  <script src="js/admin-programs.js"></script>
+  <script src="js/admin-modals.js"></script>
+  <script src="js/admin-views.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initPage();
+
+      // Build sidebar
+      const sidebar = document.getElementById('admin-sidebar');
+      let sideHTML = '';
+      let currentSection = '';
+      sideItems.forEach(item => {
+        if (item.section !== currentSection) {
+          currentSection = item.section;
+          sideHTML += `<div class="admin-sidebar-section"><div class="admin-sidebar-label">${currentSection}</div>`;
+        }
+        sideHTML += `<button class="admin-sidebar-link" data-label="${item.label}" onclick="setActiveSection('${item.label}')">${item.icon} ${item.label}</button>`;
+      });
+      sideHTML += '</div>';
+      sidebar.innerHTML = sideHTML;
+
+      // Build mobile tabs
+      const mobileTabs = document.getElementById('admin-mobile-tabs');
+      mobileTabs.innerHTML = sideItems.map(item =>
+        `<button class="admin-mobile-tab" data-label="${item.label}" onclick="setActiveSection('${item.label}')">${item.icon} ${item.label}</button>`
+      ).join('');
+
+      await initAdmin();
+    });
+  </script>
+</body>
+</html>

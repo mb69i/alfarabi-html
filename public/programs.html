@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programs & Curriculum — Alfarabi University AI Engineering</title>
+  <meta name="description" content="Explore AI Engineering programs at Al-Farabi University — from Bachelor's to Doctoral research.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Programs — Alfarabi University AI Engineering">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:image" content="/og-image.png">
+  <meta property="og:description" content="Bachelor's, Master's, and PhD programs in AI Engineering at Al-Farabi University, Iraq.">
+  <meta property="og:url" content="https://alfarabi.edu.iq/programs.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://alfarabi.edu.iq/programs.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/programs.css">
+</head>
+<body>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div id="navbar-root"></div>
+
+  <div class="programs-page">
+    <!-- Hero -->
+    <section class="programs-hero">
+      <div class="programs-hero-bg" aria-hidden="true"></div>
+      <div class="container programs-hero-content">
+        <div class="programs-breadcrumb">
+          <a href="index.html" id="pg-bc-home"></a><span>/</span><span id="pg-bc-current"></span>
+        </div>
+        <div class="section-label animate-fade-in-up" style="animation-delay:100ms;opacity:0" id="pg-label"></div>
+        <h1 class="programs-hero-title animate-fade-in-up" style="animation-delay:200ms;opacity:0" id="pg-hero-title"></h1>
+        <p class="programs-hero-sub animate-fade-in-up" style="animation-delay:350ms;opacity:0" id="pg-hero-sub"></p>
+      </div>
+      <div class="orb" style="width:300px;height:300px;top:-50px;right:8%;background:rgba(165,28,48,0.06)" aria-hidden="true"></div>
+    </section>
+
+    <!-- Feature Strip -->
+    <div class="programs-feat-strip" id="pg-feat-strip"></div>
+
+    <!-- Flagship Banner -->
+    <section class="programs-section">
+      <div class="container">
+        <div class="section-label" id="pg-flagship-label"></div>
+        <div class="programs-featured-banner aos-up" id="pg-flagship-banner"></div>
+      </div>
+    </section>
+
+    <!-- All Programs Grid -->
+    <section class="programs-section" style="padding-top:0">
+      <div class="container">
+        <div class="programs-section-header">
+          <div class="section-label" id="pg-all-label"></div>
+          <h2 class="programs-section-title" id="pg-all-title"></h2>
+          <p class="programs-section-sub" id="pg-all-sub"></p>
+        </div>
+        <div class="programs-grid" id="pg-grid"></div>
+      </div>
+    </section>
+
+    <!-- Entry Requirements -->
+    <section class="programs-section" style="padding-top:0">
+      <div class="container">
+        <div class="programs-section-header">
+          <div class="section-label" id="pg-req-label"></div>
+          <h2 class="programs-section-title" id="pg-req-title"></h2>
+        </div>
+        <div class="programs-req-section aos-up" id="pg-req-content"></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="footer-root"></div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+      await initPage();
+      renderSkeleton('#pg-grid', 'programs', 6);
+      const s = (await getSiteSettings()) || {};
+      const currentYear = new Date().getFullYear();
+      const years = currentYear - (s.founded_year || 2018);
+
+      document.getElementById('pg-bc-home').textContent = t('common.home');
+      document.getElementById('pg-bc-current').textContent = t('common.programs');
+      document.getElementById('pg-label').textContent = t('programs.label');
+      document.getElementById('pg-hero-title').innerHTML = t('programs.hero_title_1') + ' <span class="text-gradient-gold">' + t('programs.hero_title_2') + '</span>';
+      document.getElementById('pg-hero-sub').textContent = t('programs.hero_sub');
+
+      document.getElementById('pg-feat-strip').innerHTML = [
+        { num: '6', label: t('programs.degree_levels') },
+        { num: '8+', label: t('programs.erasmus_partners') },
+        { num: (s.research_papers||50)+'+', label: t('programs.published_papers') },
+        { num: '94%', label: t('programs.grad_employment') },
+      ].map(item => `<div class="programs-feat-item"><span class="programs-feat-num">${item.num}</span><span class="programs-feat-label">${item.label}</span></div>`).join('');
+      
+      // Flagship banner — from JSON, fully locale-aware
+      document.getElementById('pg-flagship-label').textContent = t('programs.flagship');
+      const pgData = (await getProgramsData()) || {};
+      const fl = pgData.flagship || {};
+      const isAr = getLocale() === 'ar';
+
+      const fh  = (isAr && fl.ar_heading)      ? fl.ar_heading      : (fl.heading      || 'B.Sc. AI Engineering');
+      const ft  = (isAr && fl.ar_title)         ? fl.ar_title        : (fl.title        || 'Comprehensive AI Engineering');
+      const fta = (isAr && fl.ar_title_accent)  ? fl.ar_title_accent : (fl.title_accent || 'Degree');
+      const fd  = (isAr && fl.ar_desc)          ? fl.ar_desc         : (fl.desc         || '');
+      const fhlStr = (isAr && fl.ar_highlights) ? fl.ar_highlights   : (fl.highlights   || '');
+      const fhl = fhlStr.split(',').map(h => h.trim()).filter(Boolean);
+
+      const fstats = (fl.stats || [
+        { icon: '📚', num: '240', label: 'ECTS Credits',      ar_label: t('programs.ects_credits'),      color: 'rgba(212,175,55,0.1)' },
+        { icon: '🎓', num: '4',   label: 'Year Duration',     ar_label: t('programs.year_duration'),     color: 'rgba(165,28,48,0.1)' },
+        { icon: '🏢', num: '12+', label: 'Industry Partners', ar_label: t('programs.industry_partners'), color: 'rgba(126,179,249,0.1)' }
+      ]).map(st => ({ ...st, _label: (isAr && st.ar_label) ? st.ar_label : st.label }));
+
+      document.getElementById('pg-flagship-banner').innerHTML = `
+        <div class="programs-banner-left">
+          <div class="programs-banner-bg" aria-hidden="true"></div>
+          <div class="programs-banner-badge">⭐ ${fh}</div>
+          <h3 class="programs-banner-title">${ft} <span class="text-gradient-gold">${fta}</span></h3>
+          <p class="programs-banner-desc">${fd}</p>
+          <div class="programs-banner-highlights">${fhl.map(h=>`<span class="programs-highlight"><span class="programs-highlight-dot"></span>${h}</span>`).join('')}</div>
+          <div class="programs-banner-actions"><a href="classes.html" class="btn-primary">${t('programs.apply_now')}</a><a href="classes.html" class="btn-gold">${t('programs.view_cohorts')}</a></div>
+        </div>
+        <div class="programs-banner-right">
+          ${fstats.map(st => `<div class="programs-banner-stat"><div class="programs-banner-stat-icon" style="background:${st.color}"><span style="font-size:1rem">${st.icon}</span></div><div><div class="programs-banner-stat-num">${st.num}</div><div class="programs-banner-stat-label">${st._label}</div></div></div>`).join('')}
+        </div>`;
+
+      // Programs grid — locale-aware
+      document.getElementById('pg-all-label').textContent = t('programs.all_label');
+      document.getElementById('pg-all-title').innerHTML = t('programs.choose_path') + ' <span class="text-gradient-gold">' + t('programs.choose_path_accent') + '</span>';
+      document.getElementById('pg-all-sub').textContent = t('programs.choose_sub');
+
+      const programs = (pgData.programs || []).sort((a,b) => (a.order||0) - (b.order||0));
+      document.getElementById('pg-grid').innerHTML = programs.map((p, i) => {
+        const ptitle    = (isAr && p.ar_title)    ? p.ar_title    : p.title;
+        const pdesc     = (isAr && p.ar_desc)     ? p.ar_desc     : p.desc;
+        const pbadge    = (isAr && p.ar_badge)    ? p.ar_badge    : p.badge;
+        const pduration = (isAr && p.ar_duration) ? p.ar_duration : p.duration;
+        return `<div class="programs-card glass-card aos-up" data-aos-delay="${i*80}">
+          <div class="programs-card-accent-bar" style="background:${p.color}"></div>
+          <div class="programs-card-body">
+            <div class="programs-card-meta"><div class="programs-card-icon" style="background:${p.color}18"><span style="font-size:1.3rem">${p.icon}</span></div><span class="programs-card-badge" style="border-color:${p.color};color:${p.color}">${pbadge}</span></div>
+            <h3 class="programs-card-title">${ptitle}</h3>
+            <p class="programs-card-desc">${pdesc}</p>
+            <div class="programs-curriculum"><span class="programs-curriculum-label">${t('programs.key_modules')}</span><div class="programs-course-chips">${(p.modules||[]).map(m=>`<span class="programs-chip">${m}</span>`).join('')}</div></div>
+            <div class="programs-card-foot"><span class="programs-duration"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${pduration}</span><a href="about.html#contact" class="programs-card-cta" style="border-color:${p.color};color:${p.color}">${t('programs.apply')}</a></div>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Requirements — locale-aware
+      document.getElementById('pg-req-label').textContent = t('programs.admissions');
+      document.getElementById('pg-req-title').innerHTML = t('programs.entry_req') + ' <span class="text-gradient-gold">' + t('programs.entry_req_accent') + '</span>';
+      const req = pgData.requirements || {};
+      const bscTitle = (isAr && req.ar_bsc_title) ? req.ar_bsc_title : (req.bsc_title || t('programs.bsc_req'));
+      const mscTitle = (isAr && req.ar_msc_title) ? req.ar_msc_title : (req.msc_title || t('programs.msc_req'));
+      const bscItems = (isAr && req.ar_bsc_items && req.ar_bsc_items.length) ? req.ar_bsc_items : (req.bsc_items || []);
+      const mscItems = (isAr && req.ar_msc_items && req.ar_msc_items.length) ? req.ar_msc_items : (req.msc_items || []);
+      document.getElementById('pg-req-content').innerHTML = `
+        <div>
+          <h4 class="programs-req-title">${bscTitle}</h4>
+          <ul class="programs-req-list">
+            ${bscItems.map(item => `<li><span class="programs-req-check">✓</span> ${item}</li>`).join('')}
+          </ul>
+        </div>
+        ${mscTitle && mscItems.length ? `<div>
+          <h4 class="programs-req-title">${mscTitle}</h4>
+          <ul class="programs-req-list">
+            ${mscItems.map(item => `<li><span class="programs-req-check">✓</span> ${item}</li>`).join('')}
+          </ul>
+        </div>` : ''}`;
+
+      initAnimateOnScroll();
+      } catch (err) {
+        console.error('Programs page error:', err);
+        renderError('#pg-grid', { title: 'Could not load programs', message: 'There was a problem fetching program data. Please try again.', retry: true });
+      }
+    });
+  </script>
+</body>
+</html>
