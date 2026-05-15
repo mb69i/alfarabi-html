@@ -1,10 +1,39 @@
 // ── Alfarabi — Data Fetching Layer ────────────────────────────────
-// Fetches JSON data from the server API and caches it.
+// Fetches JSON data from Supabase (if configured) or falls back to local API.
+
+// TODO: Replace these with your actual Supabase URL and Anon Key
+const SUPABASE_URL = 'https://zzbkqngodpbkogjjheim.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_df6Ivo8JPOluoRN8zA0FyQ_tBo_hv2e';
+let supabaseClient = null;
+
+if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 const dataCache = {};
 
 async function fetchData(file) {
   if (dataCache[file]) return dataCache[file];
+
+  // 1. Try Supabase first if configured
+  if (supabaseClient) {
+    try {
+      const tableName = file === 'site-settings' ? 'settings' : file;
+      const { data, error } = await supabaseClient.from(tableName).select('*');
+      
+      if (!error && data) {
+        // Return single object for settings, arrays for everything else
+        const formattedData = (file === 'site-settings' && data.length > 0) ? data[0] : data;
+        dataCache[file] = formattedData;
+        return formattedData;
+      }
+      console.warn(`[Supabase] Failed to load ${tableName}, falling back to local.`, error);
+    } catch (e) {
+      console.warn(`[Supabase] Exception for ${file}, falling back.`, e);
+    }
+  }
+
+  // 2. Fallback to Local JSON API
   try {
     const res = await fetch('/api/cms?file=' + file);
     if (!res.ok) throw new Error('Failed to load ' + file);
