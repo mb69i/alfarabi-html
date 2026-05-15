@@ -25,6 +25,9 @@ A premium, full-featured university website with a built-in admin CMS. Zero npm 
 - **Print Stylesheet** — Clean print layout for all pages
 - **Skeleton Loaders** — Shimmer loading states for all dynamic content
 - **Back-to-Top Button** — Smooth scroll with animated visibility
+- **AIZA Chatbot** — Draggable, glassmorphism AI assistant ready for DistilBERT backend integration
+- **Cinematic Animations** — GSAP-powered magnetic buttons and 3D card tilt effects
+- **Supabase Integration** — Built-in support to seamlessly switch from local JSON to a Supabase PostgreSQL database
 
 ---
 
@@ -187,6 +190,25 @@ Footer credits are in the `buildFooter()` function inside `public/js/main.js` (s
 
 ---
 
+## Advanced Features Configuration
+
+### AIZA Chatbot & DistilBERT
+The floating AIZA chatbot is configured to point to a local or remote DistilBERT API backend. 
+- You can configure the backend URL directly in the Chat UI.
+- The chatbot window is fully draggable and features a premium glassmorphism design.
+
+### Supabase Database Integration
+You can easily switch from the default local file-based database to a production-ready **Supabase PostgreSQL** database.
+1. Open `public/js/data.js`.
+2. Locate the Supabase configuration block at the top of the file:
+   ```javascript
+   const SUPABASE_URL = 'https://your-project.supabase.co';
+   const SUPABASE_ANON_KEY = 'your-anon-key';
+   ```
+3. Enter your Supabase credentials. The site will automatically fetch from Supabase and fall back to local JSON files if the tables are empty or unreachable.
+
+---
+
 ## Authentication
 
 - **Admin** — Access to CMS dashboard (create/edit/delete content)
@@ -234,9 +256,10 @@ Set `PORT` in `.env` to your desired port, then reverse-proxy with Nginx or Cadd
 |-------|-----------|
 | Backend | Node.js (zero dependencies, built-in `http`, `fs`, `crypto`) |
 | Frontend | Vanilla HTML, CSS, JavaScript |
+| Animations | GSAP (ScrollTrigger) |
 | 3D Graphics | Three.js (CDN) |
 | Fonts | Google Fonts (Playfair Display, Inter, Cairo) |
-| Database | File-based JSON (`/data/` directory) |
+| Database | File-based JSON (`/data/`) OR Supabase PostgreSQL |
 | Auth | Session cookies + `.env` passwords |
 
 ---
