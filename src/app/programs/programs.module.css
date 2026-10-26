@@ -1,0 +1,153 @@
+.page { min-height: 100vh; padding-top: var(--nav-height); }
+
+/* ─── Hero ──────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 48px 0 48px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--glass-border);
+}
+.heroBg {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 80% at 85% 20%, rgba(165,28,48,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 10% 90%, rgba(212,175,55,0.05) 0%, transparent 55%);
+}
+.heroContent { position: relative; z-index: 1; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 24px; }
+.breadcrumb a { color: var(--text-muted); transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--gold); }
+.heroTitle { font-size: clamp(2.4rem, 5vw, 3.8rem); font-family: var(--font-serif); line-height: 1.15; margin-top: 8px; }
+.heroSub { margin-top: 16px; color: var(--text-secondary); font-size: 1.05rem; max-width: 640px; line-height: 1.75; }
+
+/* ─── Feature Strip ──────────────────────────────────────────────── */
+.featStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--glass-border);
+}
+.featItem {
+  padding: 28px 24px;
+  border-right: 1px solid var(--glass-border);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.featItem:last-child { border-right: none; }
+.featNum { font-size: 1.8rem; font-weight: 800; font-family: var(--font-serif); color: var(--gold); }
+.featLabel { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ─── Program Cards ──────────────────────────────────────────────── */
+.section { padding: 56px 0; }
+.sectionHeader { margin-bottom: 32px; }
+.sectionTitle { font-size: clamp(1.6rem, 3vw, 2.4rem); font-family: var(--font-serif); }
+.sectionSub { color: var(--text-secondary); margin-top: 8px; font-size: 0.95rem; }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+.card {
+  display: flex; flex-direction: column;
+  overflow: hidden; position: relative;
+}
+.cardAccentBar { height: 3px; width: 100%; flex-shrink: 0; }
+.cardBody { padding: 28px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+
+.cardIcon {
+  width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cardMeta { display: flex; align-items: center; gap: 10px; }
+.cardBadge {
+  font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; border: 1px solid;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.cardTitle { font-size: 1.25rem; font-family: var(--font-serif); color: var(--text-primary); line-height: 1.3; }
+.cardDesc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin: 0; flex: 1; }
+
+/* Curriculum Preview */
+.curriculum { display: flex; flex-direction: column; gap: 8px; }
+.curriculumLabel { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; }
+.courseChips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font-size: 0.7rem; padding: 3px 9px; border-radius: 6px; border: 1px solid var(--glass-border);
+  color: var(--text-secondary); background: rgba(255,255,255,0.02);
+}
+
+/* Card Footer */
+.cardFoot { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--glass-border); }
+.durationBadge { font-size: 0.78rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.cardCta {
+  font-size: 0.8rem; font-weight: 600; padding: 7px 16px; border-radius: 8px; border: 1px solid;
+  cursor: pointer; transition: all 0.25s; background: transparent; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+}
+.cardCta:hover { opacity: 0.8; }
+
+/* ─── Featured Program: BSc Banner ───────────────────────────────── */
+.featuredBanner {
+  margin-bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 32px;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+}
+.bannerLeft { padding: 32px 36px; position: relative; z-index: 1; }
+.bannerBg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 90% at 0% 50%, rgba(212,175,55,0.06) 0%, transparent 60%);
+}
+.bannerBadge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(212,175,55,0.3);
+  background: rgba(212,175,55,0.08); color: var(--gold);
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 16px;
+}
+.bannerTitle { font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-family: var(--font-serif); line-height: 1.2; color: var(--text-primary); }
+.bannerDesc { color: var(--text-secondary); margin-top: 12px; font-size: 0.92rem; line-height: 1.7; max-width: 540px; }
+.bannerHighlights { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.highlight { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-secondary); }
+.highlightDot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.bannerActions { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+
+.bannerRight {
+  padding: 28px 32px 28px 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.bannerStatCard {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 16px 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.bannerStatIcon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.bannerStatNum { font-size: 1.2rem; font-weight: 800; font-family: var(--font-serif); color: var(--text-primary); }
+.bannerStatLabel { font-size: 0.75rem; color: var(--text-muted); margin-top: 1px; }
+
+/* ─── Requirements Section ───────────────────────────────────────── */
+.reqSection {
+  background: var(--glass-bg); backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border); border-radius: 24px;
+  padding: 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+}
+.reqTitle { font-size: 1.3rem; font-family: var(--font-serif); margin-bottom: 20px; }
+.reqList { display: flex; flex-direction: column; gap: 12px; list-style: none; }
+.reqList li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+.reqCheck { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .featStrip { grid-template-columns: repeat(2, 1fr); }
+  .featuredBanner { grid-template-columns: 1fr; }
+  .bannerRight { padding: 0 40px 40px; }
+  .reqSection { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .featStrip { grid-template-columns: 1fr 1fr; }
+  .bannerLeft, .bannerRight { padding: 28px; }
+  .reqSection { padding: 28px; }
+}
