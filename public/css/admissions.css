@@ -1,0 +1,181 @@
+/* ─── Smart Admissions 5-Step Roadmap & Criteria ─── */
+
+.admissions-section {
+  position: relative;
+  padding: 100px 0;
+  background: var(--navy-950, #050b18);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.admissions-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 60px;
+}
+.admissions-header .section-label {
+  display: inline-block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.admissions-header h2 {
+  font-family: 'Syne', var(--font-serif), serif;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+.admissions-header p {
+  color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.admissions-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* Timeline Steps */
+.admissions-timeline {
+  position: relative;
+  padding-left: 56px;
+}
+html[dir="rtl"] .admissions-timeline {
+  padding-left: 0;
+  padding-right: 56px;
+}
+.admissions-timeline::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 16px;
+  bottom: 24px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold) 0%, rgba(212, 175, 55, 0.2) 100%);
+}
+html[dir="rtl"] .admissions-timeline::before {
+  left: auto;
+  right: 23px;
+}
+
+.timeline-step {
+  position: relative;
+  margin-bottom: 36px;
+  background: var(--card-bg, rgba(17, 28, 56, 0.6));
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 24px 28px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.timeline-step:hover {
+  transform: translateX(6px);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+html[dir="rtl"] .timeline-step:hover {
+  transform: translateX(-6px);
+}
+
+.timeline-node {
+  position: absolute;
+  left: -56px;
+  top: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--navy-900, #0B132B);
+  border: 2px solid var(--gold);
+  color: var(--gold-light);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.3);
+}
+html[dir="rtl"] .timeline-node {
+  left: auto;
+  right: -56px;
+}
+
+.timeline-step h4 {
+  font-family: 'Syne', var(--font-serif), serif;
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.timeline-step p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Requirements & Criteria Card */
+.requirements-card {
+  background: var(--card-bg, rgba(17, 28, 56, 0.95));
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: var(--shadow-card);
+  position: sticky;
+  top: 100px;
+}
+.requirements-card h3 {
+  font-family: 'Syne', var(--font-serif), serif;
+  font-size: 22px;
+  color: var(--gold-light);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.req-item {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+.req-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 8px;
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.req-icon svg { width: 15px; height: 15px; stroke-width: 2.5; }
+.req-item h4 {
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.req-item p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 991px) {
+  .admissions-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .requirements-card {
+    position: static;
+  }
+}
