@@ -20,6 +20,8 @@ let adminState = {
   editingMilestone: null,
   editingValue: null,
   editingProgram: null,
+  labs: [],
+  editingLabIndex: null,
 };
 
 const FACULTY_COLORS = ['var(--gold)', 'var(--crimson-light)', '#7eb3f9', '#a78bfa', '#34d399', '#f97066'];
@@ -29,6 +31,7 @@ const sideItems = [
   { label: 'Dashboard', icon: '▦', section: 'Overview' },
   { label: 'News & Articles', icon: '📰', section: 'Content' },
   { label: 'Events & Calendar', icon: '📅', section: 'Content' },
+  { label: 'Research Labs', icon: '🔬', section: 'Content' },
   { label: 'Classes & Cohorts', icon: '🏫', section: 'Content' },
   { label: 'Student Projects', icon: '🎓', section: 'Content' },
   { label: 'Contact Messages', icon: '✉️', section: 'Content' },

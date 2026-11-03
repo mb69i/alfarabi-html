@@ -47,6 +47,8 @@ function renderAdmin() {
     html = renderContentList('📰 News & Articles', newsItems, 'news', 'article');
   } else if (active === 'Events & Calendar') {
     html = renderContentList('📅 Events & Calendar', eventItems, 'event', 'event');
+  } else if (active === 'Research Labs') {
+    html = renderLabsAdmin();
   } else if (active === 'Classes & Cohorts') {
     html = renderCohorts();
   } else if (active === 'Student Projects') {
@@ -345,6 +347,7 @@ async function initAdmin() {
   adminState.timeline = (await getTimeline()) || [];
   adminState.values = (await getValues()) || [];
   adminState.programsData = (await getProgramsData()) || { flagship: {}, programs: [], requirements: {} };
+  adminState.labs = (await getLabs()) || [];
 
   renderAdmin();
 }
