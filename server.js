@@ -363,6 +363,19 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ══════════════════════════════════════════════════════════════════
+  // ── API: Direct Labs Read ──────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════
+  if (pathname === '/api/labs' && method === 'GET') {
+    try {
+      const data = fs.readFileSync(path.join(DATA_DIR, 'labs.json'), 'utf-8');
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      return res.end(data);
+    } catch {
+      return sendJSON(res, [], 200);
+    }
+  }
+
+  // ══════════════════════════════════════════════════════════════════
   // ── API: CMS Data Read — Rate limit: 60/min ──
   // ══════════════════════════════════════════════════════════════════
   if (pathname === '/api/cms' && method === 'GET') {
