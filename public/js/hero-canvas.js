@@ -1,325 +1,196 @@
-// ── Alfarabi — Three.js Hero Canvas ──────────────────────────────
-// AI Engineering themed: Neural network, data flow pulses, clean nodes
+// ─── Al-Farabi AI Engineering Department — Unified 3D Neural Canvas ───
+// Combines Neural Synapses, Gold Central Emblem & Dynamic Particles
 
 function initHeroCanvas(containerId) {
   const container = document.getElementById(containerId);
   if (!container || typeof THREE === 'undefined') return;
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 0, 8);
+  // Clear previous canvas if any
+  container.innerHTML = '';
 
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: window.innerWidth > 768, powerPreference: 'high-performance' });
+  const isMobile = window.innerWidth < 768;
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x050b18, 0.06);
+
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 0, 7.5);
+
+  const renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: !isMobile,
+    powerPreference: 'high-performance'
+  });
   renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.2 : 2));
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
 
-  const gold = new THREE.Color(0xD4AF37);
-  const crimson = new THREE.Color(0xA51C30);
-  const blue = new THREE.Color(0x4a8eff);
-  const teal = new THREE.Color(0x34d399);
+  // ── Lights ──
+  scene.add(new THREE.AmbientLight(0x0B132B, 0.6));
+  const goldLight = new THREE.PointLight(0xD4AF37, 1.8, 40);
+  goldLight.position.set(2, 3, 4);
+  scene.add(goldLight);
 
-  // ═══════════════════════════════════════════════════════════════
-  // 1. NEURAL NETWORK — Structured nodes + connections
-  // ═══════════════════════════════════════════════════════════════
-  const nnGroup = new THREE.Group();
+  const crimsonLight = new THREE.DirectionalLight(0xA51C30, 0.6);
+  crimsonLight.position.set(-3, -2, 2);
+  scene.add(crimsonLight);
 
-  // Define neural network layers (input → hidden → output)
-  const layers = [
-    // Input layer (left)
-    [
-      { x: -4.5, y: 2.0, z: -1 },
-      { x: -4.5, y: 0.7, z: -0.5 },
-      { x: -4.5, y: -0.6, z: -1 },
-      { x: -4.5, y: -1.9, z: -0.5 },
-    ],
-    // Hidden layer 1
-    [
-      { x: -1.8, y: 2.5, z: -0.8 },
-      { x: -1.8, y: 1.0, z: -0.3 },
-      { x: -1.8, y: -0.5, z: -0.6 },
-      { x: -1.8, y: -2.0, z: -0.4 },
-      { x: -1.8, y: -3.2, z: -0.9 },
-    ],
-    // Hidden layer 2
-    [
-      { x: 1.2, y: 2.2, z: -0.6 },
-      { x: 1.2, y: 0.7, z: -0.4 },
-      { x: 1.2, y: -0.8, z: -0.5 },
-      { x: 1.2, y: -2.3, z: -0.7 },
-    ],
-    // Output layer (right)
-    [
-      { x: 4.0, y: 1.5, z: -0.8 },
-      { x: 4.0, y: 0.0, z: -0.5 },
-      { x: 4.0, y: -1.5, z: -0.7 },
-    ],
-  ];
-
-  // Create nodes (neurons)
-  const allNodes = [];
-  const nodeColors = [gold, crimson, blue, teal];
-  layers.forEach((layer, li) => {
-    layer.forEach((pos, ni) => {
-      // Outer ring (neuron border)
-      const ringGeo = new THREE.RingGeometry(0.12, 0.15, 24);
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: nodeColors[li], transparent: true, opacity: 0.35, side: THREE.DoubleSide
-      });
-      const ring = new THREE.Mesh(ringGeo, ringMat);
-      ring.position.set(pos.x, pos.y, pos.z);
-      nnGroup.add(ring);
-
-      // Inner dot (neuron core)
-      const dotGeo = new THREE.CircleGeometry(0.06, 16);
-      const dotMat = new THREE.MeshBasicMaterial({
-        color: nodeColors[li], transparent: true, opacity: 0.5, side: THREE.DoubleSide
-      });
-      const dot = new THREE.Mesh(dotGeo, dotMat);
-      dot.position.set(pos.x, pos.y, pos.z + 0.01);
-      nnGroup.add(dot);
-
-      allNodes.push({ pos, ring, dot, layerIdx: li, nodeIdx: ni });
-    });
+  // ── 1. Gold Central Emblem Group ──
+  const emblemGroup = new THREE.Group();
+  
+  const goldMat = new THREE.MeshStandardMaterial({
+    color: 0xD4AF37,
+    metalness: 0.9,
+    roughness: 0.2,
+    emissive: 0xD4AF37,
+    emissiveIntensity: 0.15
   });
 
-  // Create connections between layers
-  const connections = [];
-  for (let li = 0; li < layers.length - 1; li++) {
-    layers[li].forEach((fromPos, fi) => {
-      layers[li + 1].forEach((toPos, ti) => {
-        // Don't connect every node — skip some for cleanliness
-        if ((fi + ti) % 3 === 2) return;
+  const wireMat1 = new THREE.MeshBasicMaterial({ color: 0xD4AF37, wireframe: true, transparent: true, opacity: 0.35 });
+  const wireMat2 = new THREE.MeshBasicMaterial({ color: 0xD4AF37, wireframe: true, transparent: true, opacity: 0.2 });
 
-        const points = [
-          new THREE.Vector3(fromPos.x, fromPos.y, fromPos.z),
-          new THREE.Vector3(toPos.x, toPos.y, toPos.z),
-        ];
-        const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-        const lineMat = new THREE.LineBasicMaterial({
-          color: gold, transparent: true, opacity: 0.06
-        });
+  const torus1 = new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.03, 16, 80), wireMat1);
+  const torus2 = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.015, 16, 90), wireMat2);
+  const octa = new THREE.Mesh(new THREE.OctahedronGeometry(0.85, 0), goldMat);
+
+  emblemGroup.add(torus1);
+  emblemGroup.add(torus2);
+  emblemGroup.add(octa);
+  emblemGroup.position.set(0, 0.2, -0.5);
+  scene.add(emblemGroup);
+
+  // ── 2. Neural Network Nodes & Connections ──
+  const nnGroup = new THREE.Group();
+  const nodeGeo = new THREE.SphereGeometry(0.08, 12, 12);
+  const nodeMat = new THREE.MeshBasicMaterial({ color: 0xD4AF37 });
+  const nodeTealMat = new THREE.MeshBasicMaterial({ color: 0x34d399 });
+
+  const nodes = [
+    // Left cluster (input)
+    { pos: new THREE.Vector3(-4.2, 1.8, -1), color: 'gold' },
+    { pos: new THREE.Vector3(-4.0, 0.2, -0.5), color: 'gold' },
+    { pos: new THREE.Vector3(-4.2, -1.4, -0.8), color: 'gold' },
+    { pos: new THREE.Vector3(-2.2, 2.2, -0.6), color: 'teal' },
+    { pos: new THREE.Vector3(-2.0, 0.6, -0.3), color: 'teal' },
+    { pos: new THREE.Vector3(-2.1, -1.0, -0.5), color: 'teal' },
+    // Right cluster (output)
+    { pos: new THREE.Vector3(2.1, 2.0, -0.5), color: 'teal' },
+    { pos: new THREE.Vector3(2.0, 0.4, -0.3), color: 'teal' },
+    { pos: new THREE.Vector3(2.2, -1.2, -0.6), color: 'teal' },
+    { pos: new THREE.Vector3(4.1, 1.6, -0.8), color: 'gold' },
+    { pos: new THREE.Vector3(4.0, 0.0, -0.5), color: 'gold' },
+    { pos: new THREE.Vector3(4.2, -1.5, -0.7), color: 'gold' }
+  ];
+
+  nodes.forEach(n => {
+    const mesh = new THREE.Mesh(nodeGeo, n.color === 'teal' ? nodeTealMat : nodeMat);
+    mesh.position.copy(n.pos);
+    nnGroup.add(mesh);
+  });
+
+  // Synaptic Connection Lines
+  const lineMat = new THREE.LineBasicMaterial({
+    color: 0xD4AF37,
+    transparent: true,
+    opacity: 0.12
+  });
+
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dist = nodes[i].pos.distanceTo(nodes[j].pos);
+      if (dist < 2.8) {
+        const lineGeo = new THREE.BufferGeometry().setFromPoints([nodes[i].pos, nodes[j].pos]);
         const line = new THREE.Line(lineGeo, lineMat);
         nnGroup.add(line);
-        connections.push({ from: fromPos, to: toPos, line, mat: lineMat });
-      });
-    });
+      }
+    }
   }
-
   scene.add(nnGroup);
 
-  // ═══════════════════════════════════════════════════════════════
-  // 2. DATA FLOW PULSES — Particles traveling along connections
-  // ═══════════════════════════════════════════════════════════════
-  const pulses = [];
-  const pulseGeo = new THREE.SphereGeometry(0.04, 8, 8);
+  // ── 3. Dynamic Ambient Data Particles ──
+  const pCount = isMobile ? 300 : 1200;
+  const pGeo = new THREE.BufferGeometry();
+  const pPositions = new Float32Array(pCount * 3);
+  const pSpeeds = [];
 
-  function spawnPulse() {
-    if (connections.length === 0) return;
-    const conn = connections[Math.floor(Math.random() * connections.length)];
-    const pulseMat = new THREE.MeshBasicMaterial({
-      color: [gold, blue, teal][Math.floor(Math.random() * 3)],
-      transparent: true, opacity: 0.7
-    });
-    const pulse = new THREE.Mesh(pulseGeo, pulseMat);
-    pulse.position.set(conn.from.x, conn.from.y, conn.from.z);
-    scene.add(pulse);
-    pulses.push({
-      mesh: pulse, from: conn.from, to: conn.to,
-      progress: 0, speed: 0.004 + Math.random() * 0.006,
-      connMat: conn.mat
+  for (let i = 0; i < pCount; i++) {
+    pPositions[i * 3]     = (Math.random() - 0.5) * 16;
+    pPositions[i * 3 + 1] = (Math.random() - 0.5) * 12;
+    pPositions[i * 3 + 2] = (Math.random() - 0.5) * 8;
+    pSpeeds.push({
+      y: (Math.random() * 0.006) + 0.002,
+      rot: (Math.random() - 0.5) * 0.004
     });
   }
 
-  // Spawn pulses (less frequently on mobile)
-  const pulseInterval = window.innerWidth > 768 ? 400 : 800;
-  setInterval(spawnPulse, pulseInterval);
-
-  // ═══════════════════════════════════════════════════════════════
-  // 3. CENTRAL AI BRAIN — Clean wireframe icosahedron
-  // ═══════════════════════════════════════════════════════════════
-  const brainGroup = new THREE.Group();
-  brainGroup.position.set(0, 0.3, 0);
-
-  // Outer wireframe
-  const brainGeo = new THREE.IcosahedronGeometry(1.4, 1);
-  const brainMat = new THREE.MeshBasicMaterial({
-    color: gold, wireframe: true, transparent: true, opacity: 0.05
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+  const pMat = new THREE.PointsMaterial({
+    color: 0xD4AF37,
+    size: isMobile ? 0.03 : 0.045,
+    transparent: true,
+    opacity: 0.45
   });
-  const brain = new THREE.Mesh(brainGeo, brainMat);
-  brainGroup.add(brain);
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
 
-  // Inner sphere
-  const innerGeo = new THREE.IcosahedronGeometry(0.7, 1);
-  const innerMat = new THREE.MeshBasicMaterial({
-    color: crimson, wireframe: true, transparent: true, opacity: 0.04
+  // ── 4. Mouse Tracking & Parallax ──
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+
+  window.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
-  const innerBrain = new THREE.Mesh(innerGeo, innerMat);
-  brainGroup.add(innerBrain);
 
-  scene.add(brainGroup);
-
-  // ═══════════════════════════════════════════════════════════════
-  // 4. FLOATING CODE PARTICLES — Tiny ambient dots
-  // ═══════════════════════════════════════════════════════════════
-  const isMobile = window.innerWidth <= 768;
-  const ambientCount = isMobile ? 20 : 40;
-  const ambPos = new Float32Array(ambientCount * 3);
-  const ambVel = [];
-  for (let i = 0; i < ambientCount; i++) {
-    ambPos[i * 3] = (Math.random() - 0.5) * 20;
-    ambPos[i * 3 + 1] = (Math.random() - 0.5) * 12;
-    ambPos[i * 3 + 2] = (Math.random() - 0.5) * 5 - 3;
-    ambVel.push({
-      x: (Math.random() - 0.5) * 0.001,
-      y: (Math.random() - 0.5) * 0.001,
-      z: 0,
-    });
-  }
-  const ambGeo = new THREE.BufferGeometry();
-  ambGeo.setAttribute('position', new THREE.BufferAttribute(ambPos, 3));
-  const ambMat = new THREE.PointsMaterial({
-    color: gold, size: 0.03, transparent: true, opacity: 0.25
-  });
-  const ambientParticles = new THREE.Points(ambGeo, ambMat);
-  scene.add(ambientParticles);
-
-  // ═══════════════════════════════════════════════════════════════
-  // 5. CIRCUIT TRACES — Horizontal/vertical lines (PCB look)
-  // ═══════════════════════════════════════════════════════════════
-  const traceGroup = new THREE.Group();
-  const traceConfigs = [
-    [[-7, -3.5, -3], [-4.5, -3.5, -3], [-4.5, -1.5, -3]],
-    [[5, 3, -3.5], [7, 3, -3.5], [7, 1, -3.5]],
-    [[-6, 3.5, -4], [-3, 3.5, -4]],
-    [[3.5, -3, -3], [6.5, -3, -3]],
-    [[-5, -0.5, -4.5], [-5, 2.5, -4.5], [-3, 2.5, -4.5]],
-  ];
-  traceConfigs.forEach(pts => {
-    const vectors = pts.map(p => new THREE.Vector3(...p));
-    const geo = new THREE.BufferGeometry().setFromPoints(vectors);
-    const mat = new THREE.LineBasicMaterial({ color: gold, transparent: true, opacity: 0.05 });
-    traceGroup.add(new THREE.Line(geo, mat));
-    // Endpoint dots
-    vectors.forEach(v => {
-      const dGeo = new THREE.CircleGeometry(0.03, 8);
-      const dMat = new THREE.MeshBasicMaterial({ color: gold, transparent: true, opacity: 0.15, side: THREE.DoubleSide });
-      const d = new THREE.Mesh(dGeo, dMat);
-      d.position.copy(v);
-      traceGroup.add(d);
-    });
-  });
-  scene.add(traceGroup);
-
-  // ═══════════════════════════════════════════════════════════════
-  // INTERACTION + ANIMATION
-  // ═══════════════════════════════════════════════════════════════
-  let mouseX = 0, mouseY = 0, tMX = 0, tMY = 0;
-  window.addEventListener('mousemove', (e) => {
-    tMX = (e.clientX / window.innerWidth - 0.5) * 2;
-    tMY = (e.clientY / window.innerHeight - 0.5) * 2;
-  }, { passive: true });
-
-  let resizeTimeout;
-  function onResize() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
-    }, 150);
-  }
-  window.addEventListener('resize', onResize);
-
-  // Pause when off-screen for better performance
-  let isVisible = true;
-  const visObserver = new IntersectionObserver((entries) => {
-    isVisible = entries[0].isIntersecting;
-  }, { threshold: 0.05 });
-  visObserver.observe(container);
-
-  const clock = new THREE.Clock();
+  // ── 5. Animation Loop ──
+  let clock = new THREE.Clock();
+  let animId;
 
   function animate() {
-    requestAnimationFrame(animate);
+    animId = requestAnimationFrame(animate);
+    const elapsed = clock.getElapsedTime();
 
-    // Skip rendering when canvas is off-screen
-    if (!isVisible) return;
+    // Smooth mouse parallax
+    targetX += (mouseX - targetX) * 0.05;
+    targetY += (mouseY - targetY) * 0.05;
 
-    const t = clock.getElapsedTime();
+    // Rotate central emblem
+    emblemGroup.rotation.x = targetY * 0.4 + Math.sin(elapsed * 0.4) * 0.15;
+    emblemGroup.rotation.y = targetX * 0.5 + elapsed * 0.25;
+    torus1.rotation.z = elapsed * 0.3;
+    torus2.rotation.x = elapsed * 0.2;
+    octa.rotation.y = -elapsed * 0.4;
 
-    mouseX += (tMX - mouseX) * 0.03;
-    mouseY += (tMY - mouseY) * 0.03;
+    // Subtle drift on neural network
+    nnGroup.rotation.y = targetX * 0.2;
+    nnGroup.rotation.x = -targetY * 0.15;
 
-    // Rotate brain slowly
-    brain.rotation.y = t * 0.08;
-    brain.rotation.x = Math.sin(t * 0.04) * 0.1;
-    innerBrain.rotation.y = -t * 0.12;
-    innerBrain.rotation.z = t * 0.06;
-
-    // Brain breathing
-    const b = 1 + Math.sin(t * 0.6) * 0.03;
-    brainGroup.scale.set(b, b, b);
-
-    // Pulse neuron nodes (staggered glow)
-    allNodes.forEach((n, i) => {
-      const glow = 0.3 + Math.sin(t * 1.2 + i * 0.8) * 0.2;
-      n.dot.material.opacity = glow;
-      n.ring.material.opacity = glow * 0.6;
-      // Slight float
-      n.ring.position.y = n.pos.y + Math.sin(t * 0.5 + i) * 0.05;
-      n.dot.position.y = n.ring.position.y;
-    });
-
-    // Animate data pulses
-    for (let i = pulses.length - 1; i >= 0; i--) {
-      const p = pulses[i];
-      p.progress += p.speed;
-
-      if (p.progress >= 1) {
-        scene.remove(p.mesh);
-        p.mesh.geometry.dispose();
-        p.mesh.material.dispose();
-        pulses.splice(i, 1);
-        continue;
-      }
-
-      // Lerp position
-      p.mesh.position.x = p.from.x + (p.to.x - p.from.x) * p.progress;
-      p.mesh.position.y = p.from.y + (p.to.y - p.from.y) * p.progress;
-      p.mesh.position.z = p.from.z + (p.to.z - p.from.z) * p.progress;
-
-      // Fade in/out
-      const fade = p.progress < 0.2 ? p.progress / 0.2 : p.progress > 0.8 ? (1 - p.progress) / 0.2 : 1;
-      p.mesh.material.opacity = fade * 0.7;
-
-      // Brighten connection line as pulse passes
-      p.connMat.opacity = 0.06 + fade * 0.08;
+    // Particle drift
+    const pos = pGeo.attributes.position.array;
+    for (let i = 0; i < pCount; i++) {
+      pos[i * 3 + 1] += pSpeeds[i].y;
+      if (pos[i * 3 + 1] > 6) pos[i * 3 + 1] = -6;
     }
-
-    // Reset connection opacity (fade back)
-    connections.forEach(c => {
-      if (c.mat.opacity > 0.06) c.mat.opacity -= 0.002;
-    });
-
-    // Move ambient particles
-    const aPos = ambientParticles.geometry.attributes.position.array;
-    for (let i = 0; i < ambientCount; i++) {
-      aPos[i * 3] += ambVel[i].x;
-      aPos[i * 3 + 1] += ambVel[i].y;
-      if (Math.abs(aPos[i * 3]) > 10) ambVel[i].x *= -1;
-      if (Math.abs(aPos[i * 3 + 1]) > 6) ambVel[i].y *= -1;
-    }
-    ambientParticles.geometry.attributes.position.needsUpdate = true;
-
-    // Camera parallax
-    camera.position.x += (mouseX * 0.3 - camera.position.x) * 0.02;
-    camera.position.y += (-mouseY * 0.2 - camera.position.y) * 0.02;
-    camera.lookAt(0, 0, 0);
+    pGeo.attributes.position.needsUpdate = true;
+    particles.rotation.y = elapsed * 0.03;
 
     renderer.render(scene, camera);
   }
-
   animate();
+
+  // ── 6. Responsive Resize ──
+  function onResize() {
+    if (!container) return;
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  }
+  window.addEventListener('resize', onResize);
 }
+
+// Auto-run if canvas element exists
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('hero-canvas')) {
+    initHeroCanvas('hero-canvas');
+  }
+});

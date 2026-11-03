@@ -2,6 +2,9 @@
 // Navbar, mobile menu, language toggle, theme toggle, animations, countup
 
 document.addEventListener('DOMContentLoaded', () => {
+  initLoader();
+  initCustomCursor();
+  initMagneticAndTilt();
   applyLocale();
   initTheme();
   initNavbar();
@@ -691,4 +694,77 @@ function renderSkeleton(target, type = 'news', count = 6) {
 
   const template = cards[type] || cards.news;
   el.innerHTML = Array.from({ length: count }, template).join('');
+}
+
+// ── Custom Cursor & Cinematic Loader ────────────────────────────────
+function initCustomCursor() {
+  const dot = document.getElementById('cursorDot');
+  if (!dot || window.innerWidth <= 991 || ('ontouchstart' in window)) return;
+
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  function animateCursor() {
+    cx += (mx - cx) * 0.15;
+    cy += (my - cy) * 0.15;
+    dot.style.left = cx + 'px';
+    dot.style.top = cy + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  requestAnimationFrame(animateCursor);
+
+  document.querySelectorAll('a, button, .chip, .lab-card, input, textarea, select, .timeline-step').forEach(el => {
+    el.addEventListener('mouseenter', () => dot.classList.add('expand'));
+    el.addEventListener('mouseleave', () => dot.classList.remove('expand'));
+  });
+}
+
+function initLoader() {
+  const loader = document.getElementById('loader');
+  if (!loader) return;
+  const fill = document.getElementById('loaderFill');
+  const counter = document.getElementById('loaderCounter');
+  const tagline = document.getElementById('loaderTagline');
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += Math.random() * 8 + 3;
+    if (progress > 100) progress = 100;
+    if (fill) fill.style.width = progress + '%';
+    if (counter) counter.textContent = Math.floor(progress) + '%';
+    if (progress >= 40 && tagline) tagline.classList.add('visible');
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        loader.classList.add('fade-out');
+        setTimeout(() => { loader.style.display = 'none'; }, 600);
+      }, 300);
+    }
+  }, 40);
+}
+
+// ── Magnetic Buttons & Card 3D Tilt ─────────────────────────────────
+function initMagneticAndTilt() {
+  document.querySelectorAll('.btn-magnetic').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) * 0.3;
+      const y = (e.clientY - r.top - r.height / 2) * 0.3;
+      el.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+  });
+
+  document.querySelectorAll('.card-tilt').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width - 0.5) * 12;
+      const y = ((e.clientY - r.top) / r.height - 0.5) * -12;
+      el.style.transform = `perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateZ(6px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+    });
+  });
 }
