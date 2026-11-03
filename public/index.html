@@ -40,11 +40,25 @@
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/hero-3d.css">
+  <link rel="stylesheet" href="css/labs.css">
+  <link rel="stylesheet" href="css/admissions.css">
   <link rel="stylesheet" href="css/calendar.css">
   <link rel="stylesheet" href="css/news.css">
   <link rel="stylesheet" href="css/classes.css">
 </head>
 <body>
+  <!-- Cinematic Loader -->
+  <div id="loader">
+    <div class="loader-emblem"></div>
+    <div class="loader-text">AL-FARABI AI ENGINEERING</div>
+    <div class="loader-sub">DEPARTMENT OF ARTIFICIAL INTELLIGENCE</div>
+    <div class="loader-track"><div class="loader-fill"></div></div>
+  </div>
+
+  <!-- Custom Glowing Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+
   <div class="noise-overlay" aria-hidden="true"></div>
 
   <!-- Navbar -->
@@ -81,6 +95,21 @@
   <section class="stats-section" id="stats-section">
     <div class="container">
       <div class="stats-grid" id="stats-grid"></div>
+    </div>
+  </section>
+
+  <!-- ════ Research Labs Section ════ -->
+  <section class="labs-section" id="labs-section">
+    <div class="container">
+      <div class="labs-header">
+        <div>
+          <div class="section-label" id="labs-label"></div>
+          <h2 class="labs-title" id="labs-title"></h2>
+          <p class="labs-subtitle" id="labs-subtitle"></p>
+        </div>
+        <a href="#admissions-section" class="btn-gold" id="labs-view-all"></a>
+      </div>
+      <div class="labs-grid" id="labs-grid"></div>
     </div>
   </section>
 
@@ -128,6 +157,93 @@
     </div>
   </section>
 
+  <!-- ════ Admissions Roadmap Section ════ -->
+  <section class="admissions-section" id="admissions-section">
+    <div class="container">
+      <div class="admissions-header aos-up">
+        <span class="section-label" id="adm-label"></span>
+        <h2 id="adm-title"></h2>
+        <p id="adm-subtitle"></p>
+      </div>
+
+      <div class="admissions-layout">
+        <!-- 5-Step Timeline -->
+        <div class="admissions-timeline">
+          <div class="timeline-step aos-up" data-step="1">
+            <div class="timeline-node" id="adm-s1-num">01</div>
+            <h4 id="adm-s1-title"></h4>
+            <p id="adm-s1-desc"></p>
+          </div>
+
+          <div class="timeline-step aos-up" data-step="2">
+            <div class="timeline-node" id="adm-s2-num">02</div>
+            <h4 id="adm-s2-title"></h4>
+            <p id="adm-s2-desc"></p>
+          </div>
+
+          <div class="timeline-step aos-up" data-step="3">
+            <div class="timeline-node" id="adm-s3-num">03</div>
+            <h4 id="adm-s3-title"></h4>
+            <p id="adm-s3-desc"></p>
+          </div>
+
+          <div class="timeline-step aos-up" data-step="4">
+            <div class="timeline-node" id="adm-s4-num">04</div>
+            <h4 id="adm-s4-title"></h4>
+            <p id="adm-s4-desc"></p>
+          </div>
+
+          <div class="timeline-step aos-up" data-step="5">
+            <div class="timeline-node" id="adm-s5-num">05</div>
+            <h4 id="adm-s5-title"></h4>
+            <p id="adm-s5-desc"></p>
+          </div>
+        </div>
+
+        <!-- Requirements & Criteria Card -->
+        <div class="requirements-card aos-up">
+          <h3 id="adm-req-title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span id="adm-req-title-text"></span>
+          </h3>
+
+          <div class="req-item">
+            <div class="req-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div>
+              <p id="adm-req-1"></p>
+            </div>
+          </div>
+
+          <div class="req-item">
+            <div class="req-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div>
+              <p id="adm-req-2"></p>
+            </div>
+          </div>
+
+          <div class="req-item">
+            <div class="req-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div>
+              <p id="adm-req-3"></p>
+            </div>
+          </div>
+
+          <div class="req-item">
+            <div class="req-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div>
+              <p id="adm-req-4"></p>
+            </div>
+          </div>
+
+          <div style="margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="about.html#contact" class="btn-primary" id="adm-apply-btn" style="flex: 1; text-align: center;"></a>
+            <a href="programs.html" class="btn-gold" id="adm-guide-btn" style="flex: 1; text-align: center;"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <div id="footer-root"></div>
 
@@ -163,7 +279,9 @@
       const settings = await getSiteSettings();
       const articles = (await getArticles()) || [];
       const cohorts = (await getCohorts()) || [];
+      const labs = (await getLabs()) || [];
       const s = settings || {};
+      const locale = getLocale();
 
       // ── Hero ──
       document.getElementById('hero-badge-text').textContent = t('hero.badge_prefix');
@@ -203,6 +321,50 @@
           <span class="stats-glow" aria-hidden="true"></span>
         </div>`
       ).join('');
+
+      // ── Research Labs ──
+      document.getElementById('labs-label').textContent = t('labs.label');
+      document.getElementById('labs-title').innerHTML = t('labs.title_1') + ' <span class="text-gradient-gold">' + t('labs.title_2') + '</span>';
+      document.getElementById('labs-subtitle').textContent = t('labs.subtitle');
+      document.getElementById('labs-view-all').textContent = t('labs.view_all');
+
+      function getLabIconSvg(iconName) {
+        const icons = {
+          'network': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="m7 7 3 3m4 0 3-3m-7 7-3 3m7-3 3 3"/></svg>',
+          'cpu': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/></svg>',
+          'message-square': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+          'eye': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+          'shield': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+          'atom': '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/></svg>'
+        };
+        return icons[iconName] || '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>';
+      }
+
+      if (labs && labs.length > 0) {
+        document.getElementById('labs-grid').innerHTML = labs.map((lab, i) => {
+          const name = locale === 'ar' ? (lab.ar_name || lab.name) : lab.name;
+          const desc = locale === 'ar' ? (lab.ar_desc || lab.desc) : lab.desc;
+          const cat = locale === 'ar' ? (lab.ar_category || lab.category) : lab.category;
+          const lead = locale === 'ar' ? (lab.ar_lead || lab.lead) : lab.lead;
+          const tags = locale === 'ar' ? (lab.ar_tags || lab.tags || []) : (lab.tags || []);
+          return `<div class="lab-card aos-up" data-aos-delay="${i * 80}">
+            <div class="lab-card-top">
+              <div class="lab-icon-wrap" style="color: ${lab.color || 'var(--gold)'}; border-color: ${lab.color ? lab.color + '44' : 'rgba(212,175,55,0.2)'}">
+                ${getLabIconSvg(lab.icon)}
+              </div>
+              <span class="lab-cat-pill">${cat}</span>
+            </div>
+            <h3 class="lab-title">${name}</h3>
+            <p class="lab-desc">${desc}</p>
+            <div class="lab-tags">
+              ${tags.map(tag => `<span class="lab-tag">${tag}</span>`).join('')}
+            </div>
+            <div class="lab-footer">
+              <span class="lab-lead"><strong>${t('labs.lead')}</strong> ${lead}</span>
+            </div>
+          </div>`;
+        }).join('');
+      }
 
       // ── Calendar ──
       document.getElementById('cal-label').textContent = t('cal.label');
@@ -298,6 +460,33 @@
           <a href="classes.html" class="classes-view-btn" style="color:${accent}">${t('classes.view_hub')}</a>
         </div>`;
       }).join('');
+
+      // ── Admissions Roadmap ──
+      document.getElementById('adm-label').textContent = t('adm.label');
+      document.getElementById('adm-title').innerHTML = t('adm.title_1') + ' <span class="text-gradient-gold">' + t('adm.title_2') + '</span>';
+      document.getElementById('adm-subtitle').textContent = t('adm.subtitle');
+      document.getElementById('adm-s1-num').textContent = t('adm.step1_num');
+      document.getElementById('adm-s1-title').textContent = t('adm.step1_title');
+      document.getElementById('adm-s1-desc').textContent = t('adm.step1_desc');
+      document.getElementById('adm-s2-num').textContent = t('adm.step2_num');
+      document.getElementById('adm-s2-title').textContent = t('adm.step2_title');
+      document.getElementById('adm-s2-desc').textContent = t('adm.step2_desc');
+      document.getElementById('adm-s3-num').textContent = t('adm.step3_num');
+      document.getElementById('adm-s3-title').textContent = t('adm.step3_title');
+      document.getElementById('adm-s3-desc').textContent = t('adm.step3_desc');
+      document.getElementById('adm-s4-num').textContent = t('adm.step4_num');
+      document.getElementById('adm-s4-title').textContent = t('adm.step4_title');
+      document.getElementById('adm-s4-desc').textContent = t('adm.step4_desc');
+      document.getElementById('adm-s5-num').textContent = t('adm.step5_num');
+      document.getElementById('adm-s5-title').textContent = t('adm.step5_title');
+      document.getElementById('adm-s5-desc').textContent = t('adm.step5_desc');
+      document.getElementById('adm-req-title-text').textContent = t('adm.req_title');
+      document.getElementById('adm-req-1').textContent = t('adm.req_1');
+      document.getElementById('adm-req-2').textContent = t('adm.req_2');
+      document.getElementById('adm-req-3').textContent = t('adm.req_3');
+      document.getElementById('adm-req-4').textContent = t('adm.req_4');
+      document.getElementById('adm-apply-btn').textContent = t('adm.apply_now');
+      document.getElementById('adm-guide-btn').textContent = t('adm.download_guide');
 
       // Re-init animations for dynamic content
       initAnimateOnScroll();

@@ -70,6 +70,7 @@ async function getFaculty() { return fetchData('faculty'); }
 async function getTimeline() { return fetchData('timeline'); }
 async function getValues() { return fetchData('values'); }
 async function getProgramsData() { return fetchData('programs'); }
+async function getLabs() { return fetchData('labs'); }
 
 async function checkAdmin() {
   try {
